@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <View
+        android:id="@+id/menu"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/topradius"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="16:9" />
+
+    <View
+        android:id="@+id/bar"
+        android:layout_width="40dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/smallbar"
+        android:translationZ="3dp"
+        app:layout_constraintEnd_toEndOf="@id/menu"
+        app:layout_constraintStart_toStartOf="@id/menu"
+        app:layout_constraintTop_toTopOf="@id/menu" />
+
+    <ImageView
+        android:id="@+id/album"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toTopOf="@id/album_tv"
+        app:layout_constraintEnd_toStartOf="@id/take"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="@id/menu"
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/album" />
+
+    <ImageView
+        android:id="@+id/take"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toTopOf="@id/take_tv"
+        app:layout_constraintEnd_toEndOf="@id/menu"
+        app:layout_constraintStart_toEndOf="@id/album"
+        app:layout_constraintTop_toBottomOf="@id/bar"
+        app:layout_constraintVertical_chainStyle="packed"
+        app:srcCompat="@drawable/takephoto" />
+
+    <TextView
+        android:id="@+id/album_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="本地相册"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/menu"
+        app:layout_constraintEnd_toStartOf="@id/take_tv"
+        app:layout_constraintStart_toStartOf="@id/menu"
+        app:layout_constraintTop_toBottomOf="@id/album" />
+
+    <TextView
+        android:id="@+id/take_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="拍照获取"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        android:translationZ="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/menu"
+        app:layout_constraintEnd_toEndOf="@id/menu"
+        app:layout_constraintStart_toEndOf="@id/album_tv"
+        app:layout_constraintTop_toBottomOf="@id/take" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:constraint_referenced_ids="view4,menu,bar,album_tv,take_tv,take,album" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
