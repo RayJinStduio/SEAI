@@ -81,7 +81,7 @@
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="view4,menu,bar,album_tv,take_tv,take,album" />
+        app:constraint_referenced_ids="menu,bar,album_tv,take_tv,take,album" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
