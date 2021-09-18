@@ -1,35 +1,33 @@
 package com.rayjin.seai;
 
-import android.content.ContentResolver;
+import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.location.SettingInjectorService;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.Group;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 
 import java.io.File;
 
-import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
@@ -42,7 +40,6 @@ public class SettingActivity extends AppCompatActivity
     TextView set_logout;
     RelativeLayout set_Avatar;
     Group menu;
-    View close;
     Boolean isLogin;
 
     @Override
@@ -64,7 +61,37 @@ public class SettingActivity extends AppCompatActivity
             isLogin=false;
             set_logout.setVisibility(View.INVISIBLE);
         }
+    }
 
+    private void requestwrite()
+    {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+    }
+
+    private void requestcarema()
+    {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==1)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+
+            }
+            else
+            { //拒绝权限申请
+                Toast.makeText(this,"权限被拒绝了",Toast.LENGTH_SHORT).show();
+            }
+
+        }
     }
 
     View.OnClickListener SetOnClickListener = new View.OnClickListener()
@@ -72,35 +99,27 @@ public class SettingActivity extends AppCompatActivity
         @Override
         public void onClick(View v)
         {
-            switch (v.getId())
+            if (v.getId()==R.id.logout)
             {
-                case R.id.logout:
-                    if(isLogin)
-                    {
-                        BmobUser.logOut();
-                        Toast toast = Toast.makeText(SettingActivity.this, "账户已退出", Toast.LENGTH_SHORT);
-                        toast.show();
-                        isLogin=false;
-                        set_logout.setVisibility(View.INVISIBLE);
-                    }
-                    break;
-                case R.id.protrait_rl:
-                    if(isLogin) //menu.setVisibility(View.VISIBLE);
+                if (isLogin) {
+                    BmobUser.logOut();
+                    Toast toast = Toast.makeText(SettingActivity.this, "账户已退出", Toast.LENGTH_SHORT);
+                    toast.show();
+                    isLogin = false;
+                    set_logout.setVisibility(View.INVISIBLE);
+                }
+            }
+            else if(v.getId()==R.id.protrait_rl)
+            {
+                if (isLogin) {//menu.setVisibility(View.VISIBLE);
+                    if (ContextCompat.checkSelfPermission(SettingActivity.this,
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
                         showPopFormBottom();
-                    else
-                    {
+                    else requestwrite();
+                } else {
                     Toast toast = Toast.makeText(SettingActivity.this, "用户未登录", Toast.LENGTH_SHORT);
                     toast.show();
-                    }
-                    break;
-                case R.id.album:
-                    launchAlbum();
-                    break;
-                case R.id.take:
-                    launchCameraUri();
-                    break;
-                default:
-                    break;
+                }
             }
         }
     };
@@ -111,18 +130,19 @@ public class SettingActivity extends AppCompatActivity
         takePhotoPopWin.showAtLocation(findViewById(R.id.set_main), Gravity.CENTER, 0, 0);
     }
 
-    private View.OnClickListener onClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
+    private final View.OnClickListener onClickListener = v ->
+    {
 
-            switch (v.getId()) {
-                case R.id.take:
-                    launchCameraUri();
-                    break;
-                case R.id.album:
-                    launchAlbum();
-                    break;
-            }
+        if (v.getId()==R.id.take)
+        {
+            requestcarema();
+            if (ContextCompat.checkSelfPermission(SettingActivity.this,
+                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
+                launchCameraUri();
+        }
+        else if(v.getId()==R.id.album)
+        {
+                launchAlbum();
         }
     };
 
@@ -130,8 +150,7 @@ public class SettingActivity extends AppCompatActivity
     private void motiAvatar(String path)
     {
         final User user = BmobUser.getCurrentUser(User.class);
-        String picPath = path;
-        BmobFile bmobFile = new BmobFile(new File(picPath));
+        BmobFile bmobFile = new BmobFile(new File(path));
         bmobFile.uploadblock(new UploadFileListener()
         {
             @Override
@@ -152,7 +171,6 @@ public class SettingActivity extends AppCompatActivity
                             if (e == null)
                             {
                                 toast = Toast.makeText(SettingActivity.this, "头像修改成功", Toast.LENGTH_SHORT);
-                                //Snackbar.make(view, "更新用户信息成功：" + user.getAge(), Snackbar.LENGTH_LONG).show();
                             }
                             else
                             {
@@ -176,8 +194,6 @@ public class SettingActivity extends AppCompatActivity
                 // 返回的上传进度（百分比）
             }
         });
-        //final BmobFile bmobFile2 = new BmobFile(new File(bmobFile.getFileUrl()));
-        //user.seticons(bmobFile);
     }
 
     private final ActivityResultLauncher<String> mLauncherAlbum = registerForActivityResult
@@ -199,20 +215,15 @@ public class SettingActivity extends AppCompatActivity
     //注册调用
     private final ActivityResultLauncher<Object> mLauncherCameraUri = registerForActivityResult
     (
-        new TakeCameraUri(), new ActivityResultCallback<Uri>()
-        {
-            @Override
-            public void onActivityResult(Uri result)
+        new TakeCameraUri(), result -> {
+            if(result!=null)
             {
-                if(result!=null)
-                {
-                    launchImageCrop(result);
-                }
-                else
-                {
-                    Toast toast = Toast.makeText(SettingActivity.this, "拍照已取消", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                launchImageCrop(result);
+            }
+            else
+            {
+                Toast toast = Toast.makeText(SettingActivity.this, "拍照已取消", Toast.LENGTH_SHORT);
+                toast.show();
             }
         }
     );
@@ -225,6 +236,8 @@ public class SettingActivity extends AppCompatActivity
                 if(result!=null)
                 {
                     String path = CUriToPath(result);
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+                        path=getPath(SettingActivity.this,result);
                     motiAvatar(path);
                 }
                 else
@@ -272,10 +285,10 @@ public class SettingActivity extends AppCompatActivity
      */
     public static String getPath(final Context context, final Uri uri) {
 
-        final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
+        //final boolean isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT;
 
         // DocumentProvider
-        if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
+        if (DocumentsContract.isDocumentUri(context, uri)) {
             // ExternalStorageProvider
             if (isExternalStorageDocument(uri)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
@@ -293,7 +306,7 @@ public class SettingActivity extends AppCompatActivity
 
                 final String id = DocumentsContract.getDocumentId(uri);
                 final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                        Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }

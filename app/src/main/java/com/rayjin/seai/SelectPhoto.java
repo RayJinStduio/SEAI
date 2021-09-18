@@ -1,8 +1,9 @@
 package com.rayjin.seai;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ public class SelectPhoto extends PopupWindow
     View view;
     ImageView take,album;
 
+    @SuppressLint({"ClickableViewAccessibility", "InflateParams"})
     public SelectPhoto(Context mContext, View.OnClickListener itemsOnClick)
     {
         this.view = LayoutInflater.from(mContext).inflate(R.layout.selectphoto, null);
@@ -24,25 +26,21 @@ public class SelectPhoto extends PopupWindow
         album.setOnClickListener(itemsOnClick);
         this.setOutsideTouchable(true);
 
-        this.view.setOnTouchListener(new View.OnTouchListener()
-        {
-            public boolean onTouch(View v, MotionEvent event)
+        this.view.setOnTouchListener((v, event) -> {
+            int height = view.findViewById(R.id.menu).getTop();
+            //Log.e("info","h: "+height);
+            int y = (int) event.getY();
+            //Log.e("info","y: "+y);
+            if (event.getAction() == MotionEvent.ACTION_UP)
             {
-                int height = view.findViewById(R.id.menu).getTop();
-                //Log.e("info","h: "+height);
-                int y = (int) event.getY();
-                //Log.e("info","y: "+y);
-                if (event.getAction() == MotionEvent.ACTION_UP)
+                if (y < height)
                 {
-                    if (y < height)
-                    {
-                        //ColorDrawable dw = new ColorDrawable(0x00ffffff);
-                        //SelectPhoto.this.setBackgroundDrawable(dw);
-                        dismiss();
-                    }
+                    //ColorDrawable dw = new ColorDrawable(0x00ffffff);
+                    //SelectPhoto.this.setBackgroundDrawable(dw);
+                    dismiss();
                 }
-                return true;
             }
+            return true;
         });
 
         this.setContentView(this.view);

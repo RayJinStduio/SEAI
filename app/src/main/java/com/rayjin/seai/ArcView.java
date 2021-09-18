@@ -3,7 +3,6 @@ package com.rayjin.seai;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
@@ -22,12 +21,11 @@ public class ArcView extends View {
     private int mHeight;
 
     private int mArcHeight; //圆弧的高度
-    private int mBgColor;   //背景颜色
-    private int lgColor;    //变化的最终颜色
-    private Paint mPaint;  //画笔
-    private LinearGradient linearGradient;
-    private Rect rect=new Rect(0,0,0,0);//普通的矩形
-    private Path path=new Path();//用来绘制曲面
+    private final int mBgColor;   //背景颜色
+    private final int lgColor;    //变化的最终颜色
+    private final Paint mPaint;  //画笔
+    private final Rect rect=new Rect(0,0,0,0);//普通的矩形
+    private final Path path=new Path();//用来绘制曲面
 
     public ArcView(Context context) {
         this(context, null);
@@ -52,8 +50,8 @@ public class ArcView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 //        Log.d("----","onSizeChanged");
-        linearGradient = new LinearGradient(0,0,getMeasuredWidth(),0,
-                mBgColor,lgColor, Shader.TileMode.CLAMP
+        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0,
+                mBgColor, lgColor, Shader.TileMode.CLAMP
         );
         mPaint.setShader(linearGradient);
     }
@@ -92,6 +90,6 @@ public class ArcView extends View {
             mHeight = heightSize;
             mArcHeight = mHeight/3;
         }
-        setMeasuredDimension(mWidth, mHeight);;
+        setMeasuredDimension(mWidth, mHeight);
     }
 }

@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
 
@@ -36,7 +35,7 @@ public class CropImage extends ActivityResultContract<CropImageResult, Uri> {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.DISPLAY_NAME, imageName);
             values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
-            values.put(MediaStore.MediaColumns.RELATIVE_PATH, Environment.DIRECTORY_DCIM);
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/SEAI");
             mUriOutput = context.getContentResolver()
                     .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
         } else {
