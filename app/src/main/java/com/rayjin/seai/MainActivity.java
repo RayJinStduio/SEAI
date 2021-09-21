@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //int test=0;
+        setContentView(R.layout.sliding_menu);
+        int test=0;
         BtnSet = findViewById(R.id.BtnSet);
         BtnSet.setOnClickListener(MainOnClickListener);
         Btnlogin = findViewById(R.id.Btnlogin);
