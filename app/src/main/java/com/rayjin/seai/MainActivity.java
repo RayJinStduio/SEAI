@@ -19,6 +19,7 @@ import cn.bmob.v3.listener.LogInListener;
 public class MainActivity extends AppCompatActivity
 {
     Button BtnSet,Btnlogin;
+    View BtnCamera;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -27,6 +28,8 @@ public class MainActivity extends AppCompatActivity
         int test=0;
         BtnSet = findViewById(R.id.BtnSet);
         BtnSet.setOnClickListener(MainOnClickListener);
+        BtnCamera = findViewById(R.id.view4);
+        BtnCamera.setOnClickListener(MainOnClickListener);
         Btnlogin = findViewById(R.id.Btnlogin);
         Btnlogin.setOnClickListener(MainOnClickListener);
         Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
@@ -43,6 +46,11 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.Btnlogin:
                     loginByAccount();
+                    break;
+                case R.id.view4:
+                    Intent intent2 = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent2);
+                    break;
                 default:
                     break;
             }

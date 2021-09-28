@@ -38,6 +38,10 @@
 
         <activity android:name=".FeedbackActivity"/>
 
+        <activity android:name=".CameraActivity"/>
+
+        <activity android:name=".ResultActivity"/>
+
         <provider
         android:name="cn.bmob.v3.util.BmobContentProvider"
         android:authorities="com.rayjin.seai.BmobContentProvider">
