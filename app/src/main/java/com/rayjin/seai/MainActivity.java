@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 //import android.view.*;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -18,7 +20,8 @@ import cn.bmob.v3.listener.LogInListener;
 
 public class MainActivity extends AppCompatActivity
 {
-    Button BtnSet,Btnlogin;
+    TextView BtnSet,Btnlogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -27,8 +30,7 @@ public class MainActivity extends AppCompatActivity
         int test=0;
         BtnSet = findViewById(R.id.BtnSet);
         BtnSet.setOnClickListener(MainOnClickListener);
-        Btnlogin = findViewById(R.id.Btnlogin);
-        Btnlogin.setOnClickListener(MainOnClickListener);
+
         Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
 
     }
