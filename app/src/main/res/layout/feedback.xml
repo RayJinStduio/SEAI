@@ -49,6 +49,7 @@
         android:background="@drawable/radiusview"
         android:elevation="3dp"
         android:gravity="top"
+        android:hint="请描述发现的问题"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/feed_push"
         app:layout_constraintDimensionRatio="H,10:16"

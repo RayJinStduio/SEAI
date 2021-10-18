@@ -44,7 +44,8 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent1);
                     break;
                 case R.id.Btnlogin:
-                    loginByAccount();
+                    Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent2);
                 default:
                     break;
             }
