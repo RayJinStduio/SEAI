@@ -37,6 +37,10 @@
 
         <activity android:name=".FeedbackActivity"/>
 
+        <activity android:name=".LoginActivity"/>
+
+        <activity android:name=".ForgetActivity"/>
+
         <provider
         android:name="cn.bmob.v3.util.BmobContentProvider"
         android:authorities="com.rayjin.seai.BmobContentProvider">
