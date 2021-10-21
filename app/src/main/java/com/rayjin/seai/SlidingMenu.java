@@ -71,6 +71,19 @@ public class SlidingMenu extends HorizontalScrollView
         }
     }
 
+    public int getMenuWidth()
+    {
+        return mMenuWidth;
+    }
+
+    public boolean isBar()
+    {
+        int scrollX = getScrollX();
+        if (scrollX < mHalfMenuWidth)
+            return true;
+        return false;
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent ev)
     {

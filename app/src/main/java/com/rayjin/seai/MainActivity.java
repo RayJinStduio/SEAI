@@ -3,7 +3,9 @@ package com.rayjin.seai;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 //import android.view.*;
 import android.widget.Button;
@@ -13,6 +15,8 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import org.w3c.dom.Text;
+
 import cn.bmob.v3.Bmob;
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -20,7 +24,12 @@ import cn.bmob.v3.listener.LogInListener;
 
 public class MainActivity extends AppCompatActivity
 {
-    TextView BtnSet,Btnlogin;
+    TextView BtnSet,signIn;
+    SlidingMenu slideView;
+    ImageView menuButton;
+    ImageView closeButton;
+    TextView Btnfeedback;
+    int mMenuWidth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -30,9 +39,19 @@ public class MainActivity extends AppCompatActivity
         int test=0;
         BtnSet = findViewById(R.id.BtnSet);
         BtnSet.setOnClickListener(MainOnClickListener);
+        signIn = findViewById(R.id.signIn);
+        signIn.setOnClickListener(MainOnClickListener);
+        slideView = findViewById(R.id.slideView);
+        menuButton = findViewById(R.id.menuButton);
+        menuButton.setOnClickListener(MainOnClickListener);
+        closeButton = findViewById(R.id.closeButton);
+        closeButton.setOnClickListener(MainOnClickListener);
+        Btnfeedback = findViewById(R.id.BtnFeedback);
+        Btnfeedback.setOnClickListener(MainOnClickListener);
+
+
 
         Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
-
     }
 
    View.OnClickListener MainOnClickListener = new View.OnClickListener() {
@@ -43,9 +62,20 @@ public class MainActivity extends AppCompatActivity
                     Intent intent1 = new Intent(MainActivity.this, SettingActivity.class);
                     startActivity(intent1);
                     break;
-                case R.id.Btnlogin:
+                case R.id.signIn:
                     Intent intent2 = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(intent2);
+                    break;
+                case R.id.menuButton:
+                    slideView.smoothScrollTo(0, 0);
+                    break;
+                case R.id.closeButton:
+                    slideView.smoothScrollTo(slideView.getMenuWidth(), 0);
+                    break;
+                case R.id.BtnFeedback:
+                    Intent intent3 = new Intent(MainActivity.this, FeedbackActivity.class);
+                    startActivity(intent3);
+                    break;
                 default:
                     break;
             }
@@ -71,5 +101,14 @@ public class MainActivity extends AppCompatActivity
                 }
             }
         });
+    }
+
+    public boolean onKeyDown(int keyCode,KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0){
+            if(slideView.isBar())   slideView.smoothScrollTo(slideView.getMenuWidth(), 0);
+            else finish();
+        }
+        return false;
+
     }
 }
