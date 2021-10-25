@@ -39,6 +39,10 @@
 
         <activity android:name=".LoginActivity"/>
 
+        <activity android:name=".CameraActivity"/>
+
+        <activity android:name=".ResultActivity"/>
+
         <activity android:name=".ForgetActivity"/>
 
         <provider

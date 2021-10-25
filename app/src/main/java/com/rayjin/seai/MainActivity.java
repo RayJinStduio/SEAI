@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     ImageView menuButton;
     ImageView closeButton;
     TextView Btnfeedback;
+    View Btnanimal,Btnplant;
     int mMenuWidth;
 
     @Override
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity
         int test=0;
         BtnSet = findViewById(R.id.BtnSet);
         BtnSet.setOnClickListener(MainOnClickListener);
+        Btnanimal = findViewById(R.id.view5);
+        Btnanimal.setOnClickListener(MainOnClickListener);
+        Btnplant = findViewById(R.id.view6);
+        Btnplant.setOnClickListener(MainOnClickListener);
         signIn = findViewById(R.id.signIn);
         signIn.setOnClickListener(MainOnClickListener);
         slideView = findViewById(R.id.slideView);
@@ -75,6 +80,14 @@ public class MainActivity extends AppCompatActivity
                 case R.id.BtnFeedback:
                     Intent intent3 = new Intent(MainActivity.this, FeedbackActivity.class);
                     startActivity(intent3);
+                    break;
+                case R.id.view5:
+                    Intent intent4 = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent4);
+                    break;
+                case R.id.view6:
+                    Intent intent5 = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent5);
                     break;
                 default:
                     break;
