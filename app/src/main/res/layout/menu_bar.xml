@@ -69,7 +69,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/closeButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="25dp"
@@ -77,18 +77,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/crossmark" />
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintDimensionRatio="H,34:12"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linearLayout">
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintDimensionRatio="H,34:20"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/linearLayout">-->
             <LinearLayout
                 android:id="@+id/linearLayout1"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="4"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +98,7 @@
                 <LinearLayout
                     android:id="@+id/linearLayoutSet"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <LinearLayout
@@ -114,12 +115,12 @@
                         app:layout_constraintStart_toEndOf="@id/linearLayoutSet"
                         app:srcCompat="@drawable/setting" />
 
-                    <Button
+                    <TextView
                         style="?android:attr/borderlessButtonStyle"
                         android:id="@+id/BtnSet"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
+                        android:layout_weight="7"
                         android:backgroundTint="@color/white"
                         android:text="设置"
                         android:textColor="@color/black"
@@ -134,7 +135,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <LinearLayout
@@ -149,12 +150,12 @@
                         android:layout_marginLeft="20dp"
                         app:srcCompat="@drawable/feedback" />
 
-                    <Button
+                    <TextView
                         style="?android:attr/borderlessButtonStyle"
                         android:id="@+id/BtnFeedback"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
+                        android:layout_weight="7"
                         android:backgroundTint="@color/white"
                         android:text="反馈"
                         android:textColor="@color/black"
@@ -169,7 +170,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -183,12 +184,12 @@
                             android:layout_marginLeft="20dp"
                             app:srcCompat="@drawable/upgrade" />
 
-                        <Button
+                        <TextView
                             style="?android:attr/borderlessButtonStyle"
                             android:id="@+id/BtnUpgrade"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="6"
+                            android:layout_weight="7"
                             android:textAlignment="textStart"
                             android:backgroundTint="@color/white"
                             android:text="升级"
@@ -203,7 +204,7 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
                     android:layout_weight="1">
 
                     <LinearLayout
@@ -221,12 +222,12 @@
                         app:layout_constraintStart_toStartOf="@id/BtnSet"
                         app:srcCompat="@drawable/about" />
 
-                    <Button
+                    <TextView
                         style="?android:attr/borderlessButtonStyle"
                         android:id="@+id/BtnAbout"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="6"
+                        android:layout_weight="7"
                         android:backgroundTint="@color/white"
                         android:text="关于"
                         android:textColor="@color/black"
@@ -239,14 +240,13 @@
 
                 </LinearLayout>
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="10"/>
+
             </LinearLayout>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
-
-        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -3,6 +3,7 @@ package com.rayjin.seai;
 import android.Manifest;
 import android.content.ContentUris;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -38,7 +39,7 @@ public class SettingActivity extends AppCompatActivity
 {
 
     TextView set_logout;
-    RelativeLayout set_Avatar;
+    RelativeLayout set_Avatar,cpw;
     Group menu;
     Boolean isLogin;
 
@@ -51,6 +52,8 @@ public class SettingActivity extends AppCompatActivity
         set_logout.setOnClickListener(SetOnClickListener);
         set_Avatar =findViewById(R.id.protrait_rl);
         set_Avatar.setOnClickListener(SetOnClickListener);
+        cpw = findViewById(R.id.cpw_rl);
+        cpw.setOnClickListener(SetOnClickListener);
         menu = findViewById(R.id.group);
         if (BmobUser.isLogin())
         {
@@ -117,6 +120,19 @@ public class SettingActivity extends AppCompatActivity
                         showPopFormBottom();
                     else requestwrite();
                 } else {
+                    Toast toast = Toast.makeText(SettingActivity.this, "用户未登录", Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+            else if(v.getId() == R.id.cpw_rl)
+            {
+                if (isLogin)
+                {
+                    Intent intent1 = new Intent(SettingActivity.this, ForgetActivity.class);
+                    startActivity(intent1);
+                }
+                else
+                {
                     Toast toast = Toast.makeText(SettingActivity.this, "用户未登录", Toast.LENGTH_SHORT);
                     toast.show();
                 }

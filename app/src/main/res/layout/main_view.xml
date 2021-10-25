@@ -35,6 +35,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:id="@+id/linearLayout1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7"
@@ -67,20 +68,36 @@
                 android:layout_weight="3"
                 app:layout_constraintDimensionRatio="H,16:9" />
 
-            <Button
+            <TextView
                 style="?android:attr/borderlessButtonStyle"
-                android:id="@+id/Btnlogin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
+                android:id="@+id/signIn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="15dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="请登录" />
+                android:text="请登录"
+                android:background="@drawable/circle"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/signIn"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:drawableTop="@drawable/circle"-->
+<!--                android:text="请登录"-->
+<!--                android:textAlignment="center"-->
+<!--                -->
+<!--                android:textColor="@color/black"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="@id/linearLayout1"/>-->
+
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/menuButton"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginLeft="25dp"

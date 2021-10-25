@@ -75,7 +75,7 @@ public class MainView extends View {
         rectF = new RectF(0, mHeight -  Radius, 2 * Radius, mHeight + Radius);
         path.arcTo(rectF, 270, -90);
         path.lineTo(0, Radius);
-        rectF = new RectF(0, 9, 2 * Radius, 2 * Radius);
+        rectF = new RectF(0, 0, 2 * Radius, 2 * Radius);
         path.arcTo(rectF, 180, 90);
         path.lineTo(Radius, 0);
         path.setLastPoint(Radius, 0);
