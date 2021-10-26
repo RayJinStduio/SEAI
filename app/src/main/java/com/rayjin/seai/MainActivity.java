@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity
                 return bitmap;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.e("error",e.getMessage());
         }
         return null;
     }
