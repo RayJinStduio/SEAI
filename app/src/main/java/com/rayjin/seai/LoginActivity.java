@@ -1,13 +1,24 @@
 package com.rayjin.seai;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -20,6 +31,7 @@ public class LoginActivity extends AppCompatActivity
     private EditText login_user,login_pw,signup_user,signup_pw,signup_pw2;
     private TextView signup;
     private StackCard stack;
+
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -47,13 +59,11 @@ public class LoginActivity extends AppCompatActivity
             String user = login_user.getText().toString();
             if(user == null || user.isEmpty())
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "请输入账号", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "请输入账号");
             }
             else if(pw == null || pw.isEmpty())
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "请输入密码");
             }
             else
             {
@@ -62,16 +72,18 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void done(User user, BmobException e)
                     {
-                        Toast toast;
                         if (e == null)
                         {
-                            toast = Toast.makeText(LoginActivity.this, "登录成功：" + user.getUsername(), Toast.LENGTH_SHORT);
+                            ShowToast.showToast(LoginActivity.this, "登录成功：" + user.getUsername());
+                            Intent intent = new Intent("rayjin.broadcast.action");
+                            intent.putExtra("data", 1);
+                            sendBroadcast(intent);
+                            finish();
                         }
                         else
                         {
-                            toast = Toast.makeText(LoginActivity.this, "登录失败：" + e.getMessage(), Toast.LENGTH_SHORT);
+                            ShowToast.showToast(LoginActivity.this, "登录失败：" + e.getMessage());
                         }
-                        toast.show();
                     }
                 });
             }
@@ -83,23 +95,19 @@ public class LoginActivity extends AppCompatActivity
             String pw2=signup_pw2.getText().toString();
             if(user == null || user.isEmpty())
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "请输入账号", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "请输入账号");
             }
             else if(pw == null || pw.isEmpty())
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "请输入密码", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "请输入密码");
             }
             else if(pw2 == null || pw2.isEmpty())
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "请再输入一次密码", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "请再输入一次密码");
             }
             else if(!pw.equals(pw2))
             {
-                Toast toast = Toast.makeText(LoginActivity.this, "两次密码输入不一致", Toast.LENGTH_SHORT);
-                toast.show();
+                ShowToast.showToast(LoginActivity.this, "两次密码输入不一致");
             }
             else
             {
@@ -110,11 +118,9 @@ public class LoginActivity extends AppCompatActivity
                     @Override
                     public void done(User user, BmobException e) {
                         if (e == null) {
-                            Toast toast = Toast.makeText(LoginActivity.this, "注册成功", Toast.LENGTH_SHORT);
-                            toast.show();
+                            ShowToast.showToast(LoginActivity.this, "注册成功");
                         } else {
-                            Toast toast = Toast.makeText(LoginActivity.this, "注册失败"+ e.getMessage(), Toast.LENGTH_SHORT);
-                            toast.show();
+                            ShowToast.showToast(LoginActivity.this, "注册失败"+ e.getMessage());
                         }
                     }
                 });
