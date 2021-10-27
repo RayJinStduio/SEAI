@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     TextView welcome_user;
     TextView username_bar;
     Handler mHandler;
+    View carema_1;
     Thread t1;
 
     int mMenuWidth;
@@ -77,6 +78,8 @@ public class MainActivity extends AppCompatActivity
         welcome_user = findViewById(R.id.welcome_user);
         avatar2 = findViewById(R.id.avatar2);
         username_bar = findViewById(R.id.username_bar);
+        carema_1 = findViewById(R.id.view4);
+        carema_1.setOnClickListener(MainOnClickListener);
 
 //        StrictMode.setThreadPolicy(new
 //                StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
@@ -168,6 +171,10 @@ public class MainActivity extends AppCompatActivity
                 case R.id.BtnFeedback:
                     Intent intent3 = new Intent(MainActivity.this, FeedbackActivity.class);
                     startActivity(intent3);
+                    break;
+                case R.id.view4:
+                    Intent intent4 = new Intent(MainActivity.this, testDemo.class);
+                    startActivity(intent4);
                     break;
                 default:
                     break;

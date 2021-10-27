@@ -42,6 +42,8 @@
 
         <activity android:name=".ForgetActivity"/>
 
+        <activity android:name=".testDemo"/>
+
         <provider
         android:name="cn.bmob.v3.util.BmobContentProvider"
         android:authorities="com.rayjin.seai.BmobContentProvider">
