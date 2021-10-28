@@ -5,12 +5,19 @@ import android.content.Intent;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Xml;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+
+import org.xmlpull.v1.XmlPullParser;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.jar.Attributes;
 
 public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     private Camera mCamera;
@@ -18,6 +25,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     private SurfaceHolder mHolder;
     private int cameraId=0;//声明cameraId属性，ID为1调用前置摄像头，为0调用后置摄像头。此处因有特殊需要故调用前置摄像头
     //定义照片保存并显示的方法
+    //SurfaceView和OverCameraView在同一个Layout中，长宽都是match_parent
+    private OverCameraView mOverCameraView;//绘制对焦框控件
+
     private Camera.PictureCallback mpictureCallback=new Camera.PictureCallback(){
         @Override
         public void onPictureTaken(byte[] data,Camera camera){
@@ -40,14 +50,37 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         mPreview=findViewById(R.id.preview);//初始化预览界面
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
+
+        XmlPullParser parser=this.getResources().getXml(R.xml.overcameraview);
+        AttributeSet attributes= Xml.asAttributeSet(parser);
+        mOverCameraView=new OverCameraView(this,attributes,2);
         //点击预览界面聚焦
-        mPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCamera.autoFocus(null);
-            }
-        });
+
+        mPreview.setOnTouchListener(mOnTouchListener);
     }
+    private Camera.AutoFocusCallback autoFocusCallback = new Camera.AutoFocusCallback() {
+        @Override
+        public void onAutoFocus(boolean success, Camera camera) {
+		/*
+		其它代码
+		*/
+            mOverCameraView.disDrawTouchFocusRect();//清除对焦框
+        }
+    };
+        View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    //获取点击屏幕的位置，作为焦点位置，用于计算对焦区域
+                    float x = event.getX();
+                    float y = event.getY();
+
+                    //对焦并绘制对焦矩形框
+                    mOverCameraView.setTouchFoucusRect(mCamera, autoFocusCallback, x, y);
+                }
+                return false;
+            }
+        };
     //定义“拍照”方法
     public void capture(View view){
         Camera.Parameters parameters=mCamera.getParameters();
