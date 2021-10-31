@@ -91,9 +91,17 @@ public class MainActivity extends AppCompatActivity
         if (BmobUser.isLogin())
         {
             isLogin=true;
+            final String strURL;
             User u = User.getCurrentUser(User.class);
-            Log.e("",u.geticons().getFileUrl());
-            final String strURL = u.geticons().getFileUrl();
+            if(u.geticons()==null)
+            {
+                strURL = "https://i.loli.net/2021/10/29/rDN1TO9U5StL6ja.png";
+            }
+            else
+            {
+                strURL = u.geticons().getFileUrl();
+                Log.e("",u.geticons().getFileUrl());
+            }
 
             welcome_user.setText(u.getUsername());
             username_bar.setText(u.getUsername());
@@ -223,15 +231,26 @@ public class MainActivity extends AppCompatActivity
                 avatar.setImageResource(R.drawable.default_avatar2);
                 avatar2.setImageResource(R.drawable.default_avatar2);
                 isLogin = false;
+                avatar.setClickable(true);
             }
             else if(intent.getExtras().getInt("data")==1)
             {
+                final String strURL;
                 User u = User.getCurrentUser(User.class);
-                Log.e("",u.geticons().getFileUrl());
-                final String strURL = u.geticons().getFileUrl();
+                if(u.geticons()==null)
+                {
+                     strURL = "https://i.loli.net/2021/10/29/rDN1TO9U5StL6ja.png";
+                }
+                else
+                {
+                    Log.e("",u.geticons().getFileUrl());
+                    strURL = u.geticons().getFileUrl();
+                }
 
                 welcome_user.setText(u.getUsername());
                 username_bar.setText(u.getUsername());
+
+                avatar.setClickable(false);
 
                new Thread(){
                     public void run(){
@@ -255,6 +274,27 @@ public class MainActivity extends AppCompatActivity
                 User u = User.getCurrentUser(User.class);
                 Log.e("",u.geticons().getFileUrl());
                 final String strURL = u.geticons().getFileUrl();
+
+                new Thread(){
+                    public void run(){
+                        try {
+                            Bitmap bitmap = getBitmap(strURL);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    avatar.setImageBitmap(bitmap);
+                                    avatar2.setImageBitmap(bitmap);
+                                }
+                            });
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }.start();
+            }
+            else if(intent.getExtras().getInt("data")==3)
+            {
+                final  String strURL = "https://i.loli.net/2021/10/29/rDN1TO9U5StL6ja.png";
 
                 new Thread(){
                     public void run(){

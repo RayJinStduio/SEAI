@@ -119,6 +119,10 @@ public class LoginActivity extends AppCompatActivity
                     public void done(User user, BmobException e) {
                         if (e == null) {
                             ShowToast.showToast(LoginActivity.this, "注册成功");
+                            Intent intent = new Intent("rayjin.broadcast.action");
+                            intent.putExtra("data", 3);
+                            sendBroadcast(intent);
+                            finish();
                         } else {
                             ShowToast.showToast(LoginActivity.this, "注册失败"+ e.getMessage());
                         }
