@@ -9,5 +9,5 @@
         android:left="2dp"
         android:right="2dp"
         android:top="1dp"></padding>
-    <solid android:color="@color/white" />
+    <solid android:color="@color/light_white" />
 </shape>
