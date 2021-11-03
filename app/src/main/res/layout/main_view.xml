@@ -12,6 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+
         <View
             android:id="@+id/view3"
             android:layout_width="match_parent"
@@ -47,17 +49,50 @@
                     android:layout_weight="2.5"
                     app:layout_constraintDimensionRatio="H,16:9" />
 
-                <com.rayjin.seai.MainView
-                    android:id="@+id/view"
+
+                <RelativeLayout
+                    android:id="@+id/text_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="0dp"
-                    android:layout_weight="1"
-                    app:layout_constraintDimensionRatio="H,16:9"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    android:layout_weight="1">
+
+                    <com.rayjin.seai.MainView
+                        android:id="@+id/view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                                        <RelativeLayout
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:id="@+id/text_totallayout"
+                                            android:layout_centerVertical="true">
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/welcome"
+                                                android:text="Welcome!"
+                                                android:textSize="23sp"
+                                                android:textColor="@color/black"
+                                                android:layout_marginLeft="25dp"/>
+
+                                            <TextView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:id="@+id/welcome_user"
+                                                android:text="未登录"
+                                                android:textStyle="bold"
+                                                android:textColor="@color/black"
+                                                android:textSize="30sp"
+                                                android:layout_below="@id/welcome"
+                                                android:layout_toEndOf="@id/welcome"
+                                                android:layout_marginBottom="40dp"
+                                                />
+
+                                        </RelativeLayout>
+
+
+                </RelativeLayout>
 
 
             </LinearLayout>
@@ -68,31 +103,15 @@
                 android:layout_weight="3"
                 app:layout_constraintDimensionRatio="H,16:9" />
 
-            <TextView
-                style="?android:attr/borderlessButtonStyle"
+            <com.rayjin.seai.CircleImageView
                 android:id="@+id/signIn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/black"
                 android:textStyle="bold"
-                android:text="请登录"
-                android:background="@drawable/circle"/>
-
-<!--            <TextView-->
-<!--                android:id="@+id/signIn"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginRight="30dp"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:drawableTop="@drawable/circle"-->
-<!--                android:text="请登录"-->
-<!--                android:textAlignment="center"-->
-<!--                -->
-<!--                android:textColor="@color/black"-->
-<!--                android:textStyle="bold"-->
-<!--                app:layout_constraintStart_toStartOf="@id/linearLayout1"/>-->
+                android:background="@drawable/default_avatar2"/>
 
         </LinearLayout>
 
@@ -246,7 +265,6 @@
             app:layout_constraintTop_toTopOf="@id/view8"
             app:layout_constraintRight_toRightOf="@id/view8"
             app:layout_constraintLeft_toLeftOf="@id/view8"/>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

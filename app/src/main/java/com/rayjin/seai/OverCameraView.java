@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
@@ -25,7 +26,7 @@ public class OverCameraView extends AppCompatImageView {
 
     }
     public OverCameraView(Context context, AttributeSet attrs){
-        this(context, attrs, 0);
+        this(context, attrs, 2);
     }
     public OverCameraView(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);

@@ -42,6 +42,7 @@ public class SettingActivity extends AppCompatActivity
     RelativeLayout set_Avatar,cpw;
     Group menu;
     Boolean isLogin;
+    public static final String action = "rayjin.broadcast.action";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -108,8 +109,12 @@ public class SettingActivity extends AppCompatActivity
                     BmobUser.logOut();
                     Toast toast = Toast.makeText(SettingActivity.this, "账户已退出", Toast.LENGTH_SHORT);
                     toast.show();
-                    isLogin = false;
                     set_logout.setVisibility(View.INVISIBLE);
+                    BmobUser.logOut();
+                    Intent intent = new Intent(action);
+                    intent.putExtra("data", 0);
+                    sendBroadcast(intent);
+                    finish();
                 }
             }
             else if(v.getId()==R.id.protrait_rl)
@@ -187,6 +192,9 @@ public class SettingActivity extends AppCompatActivity
                             if (e == null)
                             {
                                 toast = Toast.makeText(SettingActivity.this, "头像修改成功", Toast.LENGTH_SHORT);
+                                Intent intent = new Intent("rayjin.broadcast.action");
+                                intent.putExtra("data", 2);
+                                sendBroadcast(intent);
                             }
                             else
                             {

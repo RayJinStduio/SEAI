@@ -2,6 +2,7 @@ package com.rayjin.seai;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.XmlResourceParser;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
@@ -18,7 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.jar.Attributes;
-
+@SuppressWarnings("ResourceType")
 public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     private Camera mCamera;
     private SurfaceView mPreview;
@@ -51,9 +52,9 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
 
-        XmlPullParser parser=this.getResources().getXml(R.xml.overcameraview);
+        XmlResourceParser parser=this.getResources().getXml(R.xml.overcameraview);
         AttributeSet attributes= Xml.asAttributeSet(parser);
-        mOverCameraView=new OverCameraView(this,attributes,2);
+        mOverCameraView=new OverCameraView(this,attributes,3);
         //点击预览界面聚焦
 
         mPreview.setOnTouchListener(mOnTouchListener);
@@ -67,20 +68,20 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
             mOverCameraView.disDrawTouchFocusRect();//清除对焦框
         }
     };
-        View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    //获取点击屏幕的位置，作为焦点位置，用于计算对焦区域
-                    float x = event.getX();
-                    float y = event.getY();
+    final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                //获取点击屏幕的位置，作为焦点位置，用于计算对焦区域
+                float x = event.getX();
+                float y = event.getY();
 
-                    //对焦并绘制对焦矩形框
-                    mOverCameraView.setTouchFoucusRect(mCamera, autoFocusCallback, x, y);
-                }
-                return false;
+                //对焦并绘制对焦矩形框
+                mOverCameraView.setTouchFoucusRect(mCamera, autoFocusCallback, x, y);
             }
-        };
+            return false;
+        }
+    };
     //定义“拍照”方法
     public void capture(View view){
         Camera.Parameters parameters=mCamera.getParameters();
