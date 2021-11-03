@@ -36,6 +36,10 @@
 
         <activity android:name=".SettingActivity"/>
 
+        <activity android:name=".CameraActivity"/>
+
+        <activity android:name=".ResultActivity"/>
+
         <activity android:name=".FeedbackActivity"/>
 
         <activity android:name=".LoginActivity"/>

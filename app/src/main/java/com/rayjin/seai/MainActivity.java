@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity
     ImageView signIn;
     ImageView menuButton;
     ImageView closeButton;
+    View Btnanimal,Btnplant;
     TextView Btnfeedback;
     Boolean isLogin;
     CircleImageView avatar;
@@ -67,6 +68,10 @@ public class MainActivity extends AppCompatActivity
         BtnSet.setOnClickListener(MainOnClickListener);
         signIn = findViewById(R.id.signIn);
         signIn.setOnClickListener(MainOnClickListener);
+        Btnanimal = findViewById(R.id.view5);
+        Btnanimal.setOnClickListener(MainOnClickListener);
+        Btnplant = findViewById(R.id.view6);
+        Btnplant.setOnClickListener(MainOnClickListener);
         slideView = findViewById(R.id.slideView);
         menuButton = findViewById(R.id.menuButton);
         menuButton.setOnClickListener(MainOnClickListener);
@@ -183,6 +188,14 @@ public class MainActivity extends AppCompatActivity
                 case R.id.view4:
                     Intent intent4 = new Intent(MainActivity.this, testDemo.class);
                     startActivity(intent4);
+                    break;
+                case R.id.view5:
+                    Intent intent5 = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent5);
+                    break;
+                case R.id.view6:
+                    Intent intent6 = new Intent(MainActivity.this, CameraActivity.class);
+                    startActivity(intent6);
                     break;
                 default:
                     break;
