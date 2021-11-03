@@ -50,8 +50,8 @@ public class UpdateDialog extends Dialog {
          * 设置 Dialog 标题
          */
         public Builder setTitle(String title) {
-            tvTitle.setText(title);
-            tvTitle.setVisibility(View.VISIBLE);
+            //tvTitle.setText(title);
+            //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
@@ -59,9 +59,9 @@ public class UpdateDialog extends Dialog {
          * 设置 Warning
          */
         public Builder setWarning(String waring) {
-            tvWarning.setText(waring);
+            //tvWarning.setText(waring);
             if (waring == null || waring.equals("")) {
-                tvWarning.setVisibility(View.GONE);
+                //tvWarning.setVisibility(View.GONE);
             }
             return this;
         }
@@ -70,7 +70,7 @@ public class UpdateDialog extends Dialog {
          * 设置 Info
          */
         public Builder setInfo(String message) {
-            tvInfo.setText(message);
+            //tvInfo.setText(message);
             return this;
         }
 
@@ -78,7 +78,7 @@ public class UpdateDialog extends Dialog {
          * 设置取消按钮文字和监听
          */
         public Builder setButtonCancel(String text, View.OnClickListener listener) {
-            btnCancel.setText(text);
+           // btnCancel.setText(text);
             mButtonCancelClickListener = listener;
             return this;
         }
@@ -87,13 +87,13 @@ public class UpdateDialog extends Dialog {
          * 设置确认按钮文字和监听
          */
         public Builder setButtonConfirm(String text, View.OnClickListener listener) {
-            btnConfirm.setText(text);
+            //btnConfirm.setText(text);
             mButtonConfirmClickListener = listener;
             return this;
         }
 
         public UpdateDialog create() {
-            btnCancel.setOnClickListener(new android.view.View.OnClickListener() {
+           /* btnCancel.setOnClickListener(new android.view.View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mDialog.dismiss();
@@ -107,7 +107,7 @@ public class UpdateDialog extends Dialog {
                     mDialog.dismiss();
                     mButtonConfirmClickListener.onClick(view);
                 }
-            });
+            });*/
 
             mDialog.setContentView(mLayout);
             mDialog.setCancelable(true);

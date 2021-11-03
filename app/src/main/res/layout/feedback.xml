@@ -23,7 +23,7 @@
         app:layout_constraintEnd_toStartOf="@id/feed_textView2"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/guideline3"
         app:layout_constraintVertical_chainStyle="packed"
         app:srcCompat="@drawable/feedback" />
 
@@ -43,7 +43,7 @@
 
     <EditText
         android:id="@+id/feed_et"
-        android:layout_width="320dp"
+        android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/radiusview"
@@ -52,9 +52,8 @@
         android:hint="请描述发现的问题"
         android:padding="15dp"
         app:layout_constraintBottom_toTopOf="@id/feed_push"
-        app:layout_constraintDimensionRatio="H,10:16"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guideline2"
+        app:layout_constraintStart_toStartOf="@id/guideline1"
         app:layout_constraintTop_toBottomOf="@id/feed_imageView" />
 
     <Button
@@ -69,7 +68,34 @@
         app:layout_constraintEnd_toEndOf="@id/feed_textView2"
         app:layout_constraintStart_toStartOf="@id/feed_imageView"
         app:layout_constraintTop_toBottomOf="@id/feed_et"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@id/guideline4" />
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.11" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.89" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.075" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.935" />
 </androidx.constraintlayout.widget.ConstraintLayout>
