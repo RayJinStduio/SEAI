@@ -52,9 +52,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
 
-        XmlResourceParser parser=this.getResources().getXml(R.xml.overcameraview);
-        AttributeSet attributes= Xml.asAttributeSet(parser);
-        mOverCameraView=new OverCameraView(this,attributes,3);
+        mOverCameraView=findViewById(R.id.over);
         //点击预览界面聚焦
 
         mPreview.setOnTouchListener(mOnTouchListener);

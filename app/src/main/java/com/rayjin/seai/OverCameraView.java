@@ -14,8 +14,7 @@ import androidx.appcompat.widget.AppCompatImageView;
 
 import java.util.ArrayList;
 
-public class OverCameraView extends AppCompatImageView {
-
+public class OverCameraView extends AppCompatImageView{
     private Context context;
 
     private Rect touchFocusRect;//焦点附近设置矩形区域作为对焦区域
@@ -23,10 +22,9 @@ public class OverCameraView extends AppCompatImageView {
 
     public OverCameraView(Context context){
         this(context, null, 0);
-
     }
     public OverCameraView(Context context, AttributeSet attrs){
-        this(context, attrs, 2);
+        this(context, attrs, 0);
     }
     public OverCameraView(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
@@ -49,7 +47,6 @@ public class OverCameraView extends AppCompatImageView {
 
         //对焦区域
         final Rect targetFocusRect=new Rect(
-                //this.getWidth() this.getHeight() this.getWidth() this.getHeight()
                 touchFocusRect.left*2000/this.getWidth() - 1000,
                 touchFocusRect.top*2000/this.getHeight() - 1000,
                 touchFocusRect.right*2000/this.getWidth() - 1000,
@@ -107,4 +104,3 @@ public class OverCameraView extends AppCompatImageView {
     }
 
 }
-
