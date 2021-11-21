@@ -79,17 +79,16 @@
                                                 android:layout_marginLeft="25dp"/>
 
                                             <TextView
+                                                android:id="@+id/welcome_user"
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:id="@+id/welcome_user"
+                                                android:layout_below="@id/welcome"
+                                                android:layout_marginBottom="40dp"
+                                                android:layout_toEndOf="@id/welcome"
                                                 android:text="未登录"
-                                                android:textStyle="bold"
                                                 android:textColor="@color/black"
                                                 android:textSize="30sp"
-                                                android:layout_below="@id/welcome"
-                                                android:layout_toEndOf="@id/welcome"
-                                                android:layout_marginBottom="40dp"
-                                                />
+                                                android:textStyle="bold" />
 
                                         </RelativeLayout>
 

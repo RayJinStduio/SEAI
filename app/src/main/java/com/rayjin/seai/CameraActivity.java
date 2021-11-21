@@ -26,6 +26,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     private SurfaceHolder mHolder;
     private int cameraId=0;//声明cameraId属性，ID为1调用前置摄像头，为0调用后置摄像头。此处因有特殊需要故调用前置摄像头
     //定义照片保存并显示的方法
+    public int type;
     //SurfaceView和OverCameraView在同一个Layout中，长宽都是match_parent
     private OverCameraView mOverCameraView;//绘制对焦框控件
 
@@ -38,6 +39,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
                 fos.close();//关闭文件
                 Intent intent=new Intent(CameraActivity.this,ResultActivity.class);//新建信使对象
                 intent.putExtra("picpath",tempfile.getAbsolutePath());//打包文件给信使
+                intent.putExtra("type",type);
                 startActivity(intent);//打开新的activity，即打开展示照片的布局界面
                 CameraActivity.this.finish();//关闭现有界面
             }
@@ -51,7 +53,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
         mPreview=findViewById(R.id.preview);//初始化预览界面
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
-
+        type= getIntent().getIntExtra("type",0);
         mOverCameraView=findViewById(R.id.over);
         //点击预览界面聚焦
 
