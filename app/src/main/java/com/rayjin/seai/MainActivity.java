@@ -187,13 +187,17 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent4);
                     break;
                 case R.id.view5:
-                case R.id.view6:
-                    Intent intent5 = new Intent(MainActivity.this, CameraActivity2.class);
+                    Intent intent5 = new Intent(MainActivity.this, CameraActivity.class);
+                    intent5.putExtra("type", 1);
                     startActivity(intent5);
+                    break;
+                case R.id.view6:
+                    Intent intent6 = new Intent(MainActivity.this, CameraActivity.class);
+                    intent6.putExtra("type", 0);
+                    startActivity(intent6);
                     break;
                 case R.id.BtnUpgrade:
                     cheakupdate();;
-
                     break;
                 default:
                     break;
