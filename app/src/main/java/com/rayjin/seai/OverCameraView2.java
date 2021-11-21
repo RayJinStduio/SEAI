@@ -8,25 +8,24 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.hardware.Camera;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import androidx.appcompat.widget.AppCompatImageView;
 
 import java.util.ArrayList;
 
-public class OverCameraView extends AppCompatImageView{
+public class OverCameraView2 extends AppCompatImageView{
     private Context context;
 
     private Rect touchFocusRect;//焦点附近设置矩形区域作为对焦区域
     private Paint touchFocusPaint;//新建画笔
 
-    public OverCameraView(Context context){
+    public OverCameraView2(Context context){
         this(context, null, 0);
     }
-    public OverCameraView(Context context, AttributeSet attrs){
+    public OverCameraView2(Context context, AttributeSet attrs){
         this(context, attrs, 0);
     }
-    public OverCameraView(Context context, AttributeSet attrs, int defStyleAttr){
+    public OverCameraView2(Context context, AttributeSet attrs, int defStyleAttr){
         super(context, attrs, defStyleAttr);
         init(context);
     }
@@ -41,7 +40,7 @@ public class OverCameraView extends AppCompatImageView{
     }
 
     //对焦并绘制对焦矩形框
-    public void setTouchFoucusRect(Camera camera, Camera.AutoFocusCallback autoFocusCallback, float x, float y){
+    public void setTouchFoucusRect(float x, float y){
         //以焦点为中心，宽度为200的矩形框
         touchFocusRect = new Rect((int)(x - 100), (int)(y - 100), (int)(x + 100), (int)(y + 100));
 
@@ -52,7 +51,7 @@ public class OverCameraView extends AppCompatImageView{
                 touchFocusRect.right*2000/this.getWidth() - 1000,
                 touchFocusRect.bottom*2000/this.getHeight() - 1000);
 
-        doTouchFocus(camera,autoFocusCallback,targetFocusRect);//对焦
+
         postInvalidate();//刷新界面，调用onDraw(Canvas canvas)函数绘制矩形框
     }
 
