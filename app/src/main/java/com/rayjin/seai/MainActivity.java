@@ -6,36 +6,31 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 //import android.view.*;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Set;
+import java.util.List;
 
 import cn.bmob.v3.Bmob;
+import cn.bmob.v3.BmobQuery;
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
 import cn.bmob.v3.listener.LogInListener;
 
 public class MainActivity extends AppCompatActivity
@@ -46,7 +41,7 @@ public class MainActivity extends AppCompatActivity
     ImageView menuButton;
     ImageView closeButton;
     View Btnanimal,Btnplant;
-    TextView Btnfeedback;
+    TextView Btnfeedback,Btnupdate;
     Boolean isLogin;
     CircleImageView avatar;
     CircleImageView avatar2;
@@ -79,6 +74,8 @@ public class MainActivity extends AppCompatActivity
         closeButton.setOnClickListener(MainOnClickListener);
         Btnfeedback = findViewById(R.id.BtnFeedback);
         Btnfeedback.setOnClickListener(MainOnClickListener);
+        Btnupdate=findViewById(R.id.BtnUpgrade);
+        Btnupdate.setOnClickListener(MainOnClickListener);
         avatar = findViewById(R.id.signIn);
         welcome_user = findViewById(R.id.welcome_user);
         avatar2 = findViewById(R.id.avatar2);
@@ -190,12 +187,13 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent4);
                     break;
                 case R.id.view5:
-                    Intent intent5 = new Intent(MainActivity.this, CameraActivity.class);
+                case R.id.view6:
+                    Intent intent5 = new Intent(MainActivity.this, CameraActivity2.class);
                     startActivity(intent5);
                     break;
-                case R.id.view6:
-                    Intent intent6 = new Intent(MainActivity.this, CameraActivity.class);
-                    startActivity(intent6);
+                case R.id.BtnUpgrade:
+                    cheakupdate();;
+
                     break;
                 default:
                     break;
@@ -329,6 +327,68 @@ public class MainActivity extends AppCompatActivity
         }
     };
 
+    public void cheakupdate()
+    {
+        BmobQuery<AppVersion> query = new BmobQuery<>();
+        query.setLimit(1).setSkip(0).order("-createdAt")
+                .findObjects(new FindListener<AppVersion>() {
+                    @Override
+                    public void done(List<AppVersion> object, BmobException e) {
+                        if (e == null) {
+                            try
+                            {
+                                int AppCode = MainActivity.this.getPackageManager().
+                                        getPackageInfo(MainActivity.this.getPackageName(), 0).versionCode;
+                                String version_old= MainActivity.this.getPackageManager().
+                                        getPackageInfo(MainActivity.this.getPackageName(), 0).versionName;
+                                if (object.get(0).getversion_i() > AppCode) {
+                                    //检测到有更新比对版本
+                                    updatedialog(version_old,object.get(0).getversion(),
+                                            object.get(0).update_log,object.get(0).path);
+                                }
+                                else{
+                                    ShowToast.showToast(MainActivity.this,"当前已为最新版本");
+                                }
+
+                            }
+                            catch (PackageManager.NameNotFoundException nameNotFoundException)
+                            {
+                                nameNotFoundException.printStackTrace();
+                            }
+                        } else {
+                            // ...
+                        }
+                    }
+                });
+    }
+
+    public void updatedialog(String old_v, String new_v, String content, BmobFile file)
+    {
+            UpdateDialog.Builder builder = new UpdateDialog.Builder(MainActivity.this);
+            builder.setnewv(new_v);
+            builder.setoldv(old_v);
+            builder.setcontent(content);
+            builder.setfile(file);
+            Context c=MainActivity.this;
+            builder.setcontext(c);
+            //                   builder.setTitle("提示");
+//                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            dialog.dismiss();
+//                            //设置你的操作事项
+//                        }
+//                    });
+//
+//                    builder.setNegativeButton("取消",
+//                            new android.content.DialogInterface.OnClickListener() {
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                }
+//                            });
+
+            builder.create().show();
+
+    }
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);

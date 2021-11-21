@@ -3,6 +3,13 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\Ray\\ray_android.jks')
+            storePassword '2002qd0129'
+            keyAlias 'ray'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 

@@ -2,23 +2,18 @@ package com.rayjin.seai;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.res.XmlResourceParser;
 import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Xml;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
-import org.xmlpull.v1.XmlPullParser;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.jar.Attributes;
+
 @SuppressWarnings("ResourceType")
 public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     private Camera mCamera;
@@ -47,7 +42,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.takephoto);
+        setContentView(R.layout.takephoto2);
         mPreview=findViewById(R.id.preview);//初始化预览界面
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
