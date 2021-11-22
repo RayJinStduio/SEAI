@@ -4,9 +4,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -22,11 +24,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 public class CameraActivity2 extends AppCompatActivity {
    Camera2SurfaceView surfaceView;
     private Camera2Proxy mCameraProxy;
+    public int type;
     CameraManager cameraManager;
     CameraDevice.StateCallback cam_stateCallback;
     CameraDevice opened_camera;
@@ -49,6 +55,7 @@ public class CameraActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.takephoto2);
+        type= getIntent().getIntExtra("type",0);
         takephoto_btn=findViewById(R.id.takephoto);
         takephoto_imageView= findViewById(R.id.imageView2);
         surfaceView=findViewById(R.id.preview);
@@ -88,6 +95,7 @@ public class CameraActivity2 extends AppCompatActivity {
                 mCameraProxy.captureStillPicture();
             }
         });
+        checkPermission();
     }
 
 
@@ -118,20 +126,39 @@ public class CameraActivity2 extends AppCompatActivity {
     }
 
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener =
-            new ImageReader.OnImageAvailableListener() {
+            new ImageReader.OnImageAvailableListener()
+            {
                 @Override
-                public void onImageAvailable(ImageReader reader) {
+                public void onImageAvailable(ImageReader reader)
+                {
                     //new ImageSaveTask().execute(reader.acquireNextImage()); // 保存图片
-                    Image image= reader.acquireLatestImage();
-                    ByteBuffer buffer= image.getPlanes()[0].getBuffer();
-                    int length= buffer.remaining();
-                    byte[] bytes= new byte[length];
+                    Image image = reader.acquireLatestImage();
+                    ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                    int length = buffer.remaining();
+                    byte[] bytes = new byte[length];
                     buffer.get(bytes);
                     image.close();
-                    bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
+                    // bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
                     //B2.2 显示图片
-                    takephoto_imageView.setVisibility(View.VISIBLE);
-                    takephoto_imageView.setImageBitmap(bitmap);
+                    // takephoto_imageView.setVisibility(View.VISIBLE);
+                    // takephoto_imageView.setImageBitmap(bitmap);
+
+                    File tempfile = new File(CameraActivity2.this.getExternalCacheDir().toString() + "/emp.png");//新建一个文件对象tempfile，并保存在某路径中
+                    try
+                    {
+                        FileOutputStream fos = new FileOutputStream(tempfile);
+                        fos.write(bytes);//将照片放入文件中
+                        fos.close();//关闭文件
+                        Intent intent = new Intent(CameraActivity2.this, ResultActivity.class);//新建信使对象
+                        intent.putExtra("picpath", tempfile.getAbsolutePath());//打包文件给信使
+                        intent.putExtra("type", type);
+                        startActivity(intent);//打开新的activity，即打开展示照片的布局界面
+                        CameraActivity2.this.finish();//关闭现有界面
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             };
     private class ImageSaveTask extends AsyncTask<Image, Void, Void>
