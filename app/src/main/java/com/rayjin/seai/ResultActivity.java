@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -21,6 +22,7 @@ import java.io.IOException;
 public class ResultActivity extends Activity {
     String path=null;
     TextView accuracy,res_tv;
+    ProgressBar pb;
     int type;
     double Accuracy=0;
     @Override
@@ -42,6 +44,8 @@ public class ResultActivity extends Activity {
         //Bitmap bitmap=BitmapFactory.decodeFile(path);
         res_tv = findViewById(R.id.textview_2);
         accuracy = findViewById(R.id.textview1);
+        pb=findViewById(R.id.pb);
+        pb.setVisibility(View.VISIBLE);
         if(type==1) b_res_an();
         else b_res_p();
     }
@@ -66,6 +70,7 @@ public class ResultActivity extends Activity {
                                     res_tv.setText(getjson(res[0]));
                                 else res_tv.setText(res[0]);
                                 accuracy.setText("准确率:"+(int)(Accuracy*100)+"%");
+                                pb.setVisibility(View.GONE);
                             }
                         });
                     }
