@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list 
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:variablePadding="true" >
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_01"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_02"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_03"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_04"
+	        android:gravity="left">
+	    </clip>	
+	</item>	
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_05"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_06"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_07"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_08"
+	        android:gravity="left">
+	    </clip>	
+	</item>	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_09"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_10"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_11"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_12"
+	        android:gravity="left">
+	    </clip>	
+	</item><item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_13"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_14"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_15"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_16"
+	        android:gravity="left">
+	    </clip>	
+	</item>		<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_17"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_18"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_19"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_20"
+	        android:gravity="left">
+	    </clip>	
+	</item>	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_21"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_22"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_23"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_24"
+	        android:gravity="left">
+	    </clip>	
+	</item>	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_25"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_26"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_27"
+	        android:gravity="left">
+	    </clip>	
+	</item>
+	<item android:duration="150">
+	    <clip   xmlns:android="http://schemas.android.com/apk/res/android"
+	        android:clipOrientation="horizontal"
+	        android:drawable="@drawable/ef_loader_28"
+	        android:gravity="left">
+	    </clip>	
+	</item>	
+</animation-list>
