@@ -44,7 +44,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback{
     @Override
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.takephoto2);
+        setContentView(R.layout.takephoto);
         mPreview=findViewById(R.id.preview);//初始化预览界面
         mHolder=mPreview.getHolder();
         mHolder.addCallback(this);
