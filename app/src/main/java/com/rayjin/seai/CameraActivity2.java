@@ -143,7 +143,7 @@ public class CameraActivity2 extends AppCompatActivity {
                     // takephoto_imageView.setVisibility(View.VISIBLE);
                     // takephoto_imageView.setImageBitmap(bitmap);
 
-                    File tempfile = new File(CameraActivity2.this.getExternalCacheDir().toString() + "/emp.png");//新建一个文件对象tempfile，并保存在某路径中
+                    File tempfile = new File(CameraActivity2.this.getExternalCacheDir().toString() + "/temp.png");//新建一个文件对象tempfile，并保存在某路径中
                     try
                     {
                         FileOutputStream fos = new FileOutputStream(tempfile);

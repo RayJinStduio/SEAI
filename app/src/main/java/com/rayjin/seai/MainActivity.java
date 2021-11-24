@@ -369,12 +369,12 @@ public class MainActivity extends AppCompatActivity
     public void updatedialog(String old_v, String new_v, String content, BmobFile file)
     {
             UpdateDialog.Builder builder = new UpdateDialog.Builder(MainActivity.this);
-            builder.setnewv(new_v);
-            builder.setoldv(old_v);
-            builder.setcontent(content);
-            builder.setfile(file);
+            builder.SetNewVersion(new_v);
+            builder.SetOldVersion(old_v);
+            builder.SetContent(content);
+            builder.SetFile(file);
             Context c=MainActivity.this;
-            builder.setcontext(c);
+            builder.SetContext(c);
             //                   builder.setTitle("提示");
 //                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 //                        public void onClick(DialogInterface dialog, int which) {

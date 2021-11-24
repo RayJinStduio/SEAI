@@ -22,8 +22,8 @@ import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.DownloadFileListener;
 
 /**
- * 作者 Aaron Zhao
- * 时间 2015/9/16 11:21
+ * 作者 Ray
+ * 时间 2021/11/8 8:06
  * 名称 CustomDialog.java 描述
  */
 public class UpdateDialog extends Dialog {
@@ -45,13 +45,13 @@ public class UpdateDialog extends Dialog {
     public static class Builder
     {
         private BmobFile file;
-        private View mLayout;
-        private View.OnClickListener mButtonCancelClickListener;
-        private View.OnClickListener mButtonConfirmClickListener;
-        private TextView new_version, old_version, content;
-        private UpdateDialog mDialog;
-        private Button btnConfirm;
-        private TextView btnCancel;
+        private final View mLayout;
+        private final TextView new_version;
+        private final TextView old_version;
+        private final TextView content;
+        private final UpdateDialog mDialog;
+        private final Button btnConfirm;
+        private final TextView btnCancel;
         private Context con;
 
         public Builder(Context context)
@@ -72,23 +72,23 @@ public class UpdateDialog extends Dialog {
         /**
          * 设置 Dialog 标题
          */
-        public Builder setnewv(String newversion)
+        public Builder SetNewVersion(String NewVersion)
         {
-            new_version.setText(newversion);
+            new_version.setText(NewVersion);
             //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
-        public Builder setcontext(Context cont)
+        public Builder SetContext(Context cont)
         {
             con = cont;
             //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
-        public Builder setfile(BmobFile newfile)
+        public Builder SetFile(BmobFile NewFile)
         {
-            file = newfile;
+            file = NewFile;
             //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
@@ -96,64 +96,35 @@ public class UpdateDialog extends Dialog {
         /**
          * 设置 Warning
          */
-        public Builder setoldv(String oldversion)
+        public Builder SetOldVersion(String OldVersion)
         {
             //tvWarning.setText(waring);
-            old_version.setText(oldversion);
+            old_version.setText(OldVersion);
             return this;
         }
 
         /**
          * 设置 Info
          */
-        public Builder setcontent(String message)
+        public Builder SetContent(String message)
         {
             content.setText(message);
             return this;
         }
 
-
-        /**
-         * 设置取消按钮文字和监听
-         */
-        public Builder setButtonCancel(String text, View.OnClickListener listener)
-        {
-            // btnCancel.setText(text);
-            //mButtonCancelClickListener = listener;
-            return this;
-        }
-
-        /**
-         * 设置确认按钮文字和监听
-         */
-        public Builder setButtonConfirm(String text, View.OnClickListener listener)
-        {
-            //btnConfirm.setText(text);
-            //mButtonConfirmClickListener = listener;
-            return this;
-        }
-
         public UpdateDialog create()
         {
-            btnCancel.setOnClickListener(new android.view.View.OnClickListener()
+            btnCancel.setOnClickListener(view ->
             {
-                @Override
-                public void onClick(View view)
-                {
-                    mDialog.dismiss();
-                    //mButtonCancelClickListener.onClick(view);
-                }
+                mDialog.dismiss();
+                //mButtonCancelClickListener.onClick(view);
             });
 
-            btnConfirm.setOnClickListener(new android.view.View.OnClickListener()
+            btnConfirm.setOnClickListener(view ->
             {
-                @Override
-                public void onClick(View view)
-                {
-                    downloadFile(file);
-                    mDialog.dismiss();
-                    //mButtonConfirmClickListener.onClick(view);
-                }
+                downloadFile(file);
+                mDialog.dismiss();
+                //mButtonConfirmClickListener.onClick(view);
             });
 
             mDialog.setContentView(mLayout);
@@ -164,7 +135,7 @@ public class UpdateDialog extends Dialog {
 
         private void downloadFile(BmobFile file)
         {
-            //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()+"/bmob/"
+            //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()
             File saveFile = new File(Environment.getExternalStorageDirectory(), file.getFilename());
             file.download(saveFile, new DownloadFileListener()
             {
@@ -190,9 +161,9 @@ public class UpdateDialog extends Dialog {
                 }
 
                 @Override
-                public void onProgress(Integer value, long newworkSpeed)
+                public void onProgress(Integer value, long NewWorkSpeed)
                 {
-                    Log.i("bmob", "下载进度：" + value + "," + newworkSpeed);
+                    Log.i("BOMB", "下载进度：" + value + "," + NewWorkSpeed);
                 }
 
             });

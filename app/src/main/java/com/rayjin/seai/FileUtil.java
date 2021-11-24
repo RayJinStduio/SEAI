@@ -24,11 +24,11 @@ public class FileUtil {
         // 创建字节输入流  
         FileInputStream fis = new FileInputStream(filePath);  
         // 创建一个长度为10240的Buffer
-        byte[] bbuf = new byte[10240];  
+        byte[] buf = new byte[10240];
         // 用于保存实际读取的字节数  
-        int hasRead = 0;  
-        while ( (hasRead = fis.read(bbuf)) > 0 ) {  
-            sb.append(new String(bbuf, 0, hasRead));  
+        int hasRead;
+        while ( (hasRead = fis.read(buf)) > 0 ) {
+            sb.append(new String(buf, 0, hasRead));
         }  
         fis.close();  
         return sb.toString();
@@ -54,8 +54,7 @@ public class FileUtil {
                     bos.write(buffer, 0, len1);
                 }
 
-                byte[] var7 = bos.toByteArray();
-                return var7;
+                return bos.toByteArray();
             } finally {
                 try {
                     if (in != null) {
