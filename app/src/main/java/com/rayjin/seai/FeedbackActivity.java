@@ -1,5 +1,6 @@
 package com.rayjin.seai;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,18 +15,22 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import cn.bmob.v3.BmobUser;
+import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UpdateListener;
+import cn.bmob.v3.listener.UploadFileListener;
 
 public class FeedbackActivity extends AppCompatActivity
 {
+    boolean isupload=false;
     EditText et;
     Button push;
     int from;
     boolean isLogin;
     User user;
     String error;
-    byte[] pic;
+    String pic;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -41,7 +46,7 @@ public class FeedbackActivity extends AppCompatActivity
             {
                 et.setHint("请输入正确的结果");
                 error= getIntent().getStringExtra("error");
-                pic =getIntent().getByteArrayExtra("pic");
+                pic =getIntent().getStringExtra("pic");
             }
         }
         if (BmobUser.isLogin())
@@ -59,27 +64,27 @@ public class FeedbackActivity extends AppCompatActivity
         {
             if (v.getId()==R.id.feed_push)
             {
-                if (isLogin)
+                if (isLogin&&!isupload)
                 {
                     String text=et.getText().toString();
                     if(text.length()>0)
                     {
+                        isupload=true;
                         if(from==0)
                         {
                             FeedPush(text);
                         }
+                        else ErrorPush(text,pic,error);
                     }
                     else
                     {
-                        Toast toast = Toast.makeText(FeedbackActivity.this, "请输入内容", Toast.LENGTH_SHORT);
-                        toast.show();
+                        ShowToast.showToast(FeedbackActivity.this, "请输入内容");
                     }
                 }
+                else if(isLogin)
+                    ShowToast.showToast(FeedbackActivity.this, "正在上传信息");
                 else
-                {
-                    Toast toast = Toast.makeText(FeedbackActivity.this, "请先登录", Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+                    ShowToast.showToast(FeedbackActivity.this, "请先登录");
             }
         }
     };
@@ -94,22 +99,61 @@ public class FeedbackActivity extends AppCompatActivity
             @Override
             public void done(String objectId, BmobException e)
             {
-                Toast toast;
                 if(e==null)
                 {
-                    toast = Toast.makeText(FeedbackActivity.this, "反馈成功", Toast.LENGTH_SHORT);
+                    ShowToast.showToast(FeedbackActivity.this, "反馈成功");
                 }else
                 {
-                    toast = Toast.makeText(FeedbackActivity.this, "创建数据失败：" + e.getMessage(), Toast.LENGTH_SHORT);
+                    ShowToast.showToast(FeedbackActivity.this, "创建数据失败：" + e.getMessage());
                 }
-                toast.show();
+                isupload=false;
             }
         });
     }
 
-    public void ErrorPush(String content)
+    public void ErrorPush(String content,String path,String error)
     {
-        getFile(pic,FeedbackActivity.this.getExternalCacheDir().getAbsolutePath(),"temp.png");
+        final User user = BmobUser.getCurrentUser(User.class);
+        BmobFile bmobFile = new BmobFile(new File(path));
+        bmobFile.uploadblock(new UploadFileListener()
+        {
+            @Override
+            public void done(BmobException e)
+            {
+                if(e==null)
+                {
+                    error e2 = new error();
+                    e2.setError(error);
+                    e2.setRight(content);
+                    e2.setPic(bmobFile);
+                    e2.save(new SaveListener<String>()
+                    {
+                        @Override
+                        public void done(String objectId, BmobException e)
+                        {
+                            if(e==null)
+                            {
+                                ShowToast.showToast(FeedbackActivity.this, "反馈成功");
+                            }else
+                            {
+                                ShowToast.showToast(FeedbackActivity.this, "反馈失败：" + e.getMessage());
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    ShowToast.showToast(FeedbackActivity.this, "反馈失败：" + e.getMessage());
+                    //Log.e("error", e.getMessage());toast.show();
+                }
+                isupload=false;
+            }
+            @Override
+            public void onProgress(Integer value)
+            {
+                // 返回的上传进度（百分比）
+            }
+        });
 
     }
 

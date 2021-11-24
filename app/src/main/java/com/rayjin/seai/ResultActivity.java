@@ -25,6 +25,7 @@ public class ResultActivity extends Activity {
     TextView accuracy,res_tv;
     ProgressBar pb;
     int type;
+    String res_main;
     double Accuracy=0;
     TextView fanKui;
 
@@ -62,6 +63,9 @@ public class ResultActivity extends Activity {
             switch (v.getId()) {
                 case R.id.fanKui:
                     Intent intent1 = new Intent(ResultActivity.this, FeedbackActivity.class);
+                    intent1.putExtra("from", 1);
+                    intent1.putExtra("error", res_main);
+                    intent1.putExtra("pic",path);
                     startActivity(intent1);
                     break;
             }
@@ -149,11 +153,12 @@ public class ResultActivity extends Activity {
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
                 String name = object.getString("name");
+                if(i==0) res_main=name;
                 double score = object.optDouble("score");
                 if(score>Accuracy) Accuracy=score;
                 score*=100;
                 String sscore = String.format("%.2f",score);
-                Log.e("1", "name：" + name + "  score：" + sscore + "%" );
+                //Log.e("1", "name：" + name + "  score：" + sscore + "%" );
                 buffer.append( name + " score: " + sscore + "%" + "\n");
 
             }

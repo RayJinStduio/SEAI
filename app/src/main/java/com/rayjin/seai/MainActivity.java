@@ -180,19 +180,21 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.BtnFeedback:
                     Intent intent3 = new Intent(MainActivity.this, FeedbackActivity.class);
+                    intent3.putExtra("from", 0);
                     startActivity(intent3);
                     break;
                 case R.id.view4:
-                    Intent intent4 = new Intent(MainActivity.this, testDemo.class);
-                    startActivity(intent4);
+                    //Intent intent4 = new Intent(MainActivity.this, testDemo.class);
+                    //startActivity(intent4);
+                    ShowToast.showToast(MainActivity.this,"功能正在开发中...");
                     break;
                 case R.id.view5:
-                    Intent intent5 = new Intent(MainActivity.this, CameraActivity.class);
+                    Intent intent5 = new Intent(MainActivity.this, CameraActivity2.class);
                     intent5.putExtra("type", 1);
                     startActivity(intent5);
                     break;
                 case R.id.view6:
-                    Intent intent6 = new Intent(MainActivity.this, CameraActivity.class);
+                    Intent intent6 = new Intent(MainActivity.this, CameraActivity2.class);
                     intent6.putExtra("type", 0);
                     startActivity(intent6);
                     break;

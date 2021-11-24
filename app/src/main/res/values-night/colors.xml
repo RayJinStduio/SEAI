@@ -7,6 +7,7 @@
     <color name="red">#FFFF0000</color>
     <color name="black">#FFFFFFFF</color>
     <color name="white">#303030</color>
+    <color name="gray">#FF363636</color>
     <color name="light_white">#FFFFFFFF</color>
     <color name="light_purple">#55C4D0FB</color>
     <color name="light_blue">#55D1E7FE</color>
