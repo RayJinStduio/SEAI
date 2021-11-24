@@ -44,6 +44,8 @@
 
         <activity android:name=".CameraActivity"/>
 
+        <activity android:name=".CameraActivity2"/>
+
         <activity android:name=".ResultActivity"/>
 
         <activity android:name=".FeedbackActivity"/>
