@@ -7,7 +7,8 @@ public class feedback extends BmobObject
     private String content;
     private String username;
 
-    public void setUsername(String username) {
+    public void setUsername(String username)
+    {
         this.username= username;
     }
 

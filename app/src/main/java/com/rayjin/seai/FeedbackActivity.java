@@ -25,7 +25,7 @@ public class FeedbackActivity extends AppCompatActivity
     boolean isLogin;
     User user;
     String error;
-    byte pic[];
+    byte[] pic;
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -66,7 +66,7 @@ public class FeedbackActivity extends AppCompatActivity
                     {
                         if(from==0)
                         {
-                            feedpush(text);
+                            FeedPush(text);
                         }
                     }
                     else
@@ -84,7 +84,7 @@ public class FeedbackActivity extends AppCompatActivity
         }
     };
 
-    public void feedpush(String content)
+    public void FeedPush(String content)
     {
         feedback p2 = new feedback();
         p2.setUsername(user.getUsername());
@@ -107,7 +107,7 @@ public class FeedbackActivity extends AppCompatActivity
         });
     }
 
-    public void errorpush(String content)
+    public void ErrorPush(String content)
     {
         getFile(pic,FeedbackActivity.this.getExternalCacheDir().getAbsolutePath(),"temp.png");
 
@@ -117,7 +117,7 @@ public class FeedbackActivity extends AppCompatActivity
     {
         BufferedOutputStream bos = null;
         FileOutputStream fos = null;
-        File file = null;
+        File file;
         try
         {
             File dir = new File(filePath);
