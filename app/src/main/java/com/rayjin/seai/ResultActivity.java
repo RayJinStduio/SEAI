@@ -1,6 +1,7 @@
 package com.rayjin.seai;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -25,10 +26,15 @@ public class ResultActivity extends Activity {
     ProgressBar pb;
     int type;
     double Accuracy=0;
+    TextView fanKui;
+
     @Override
     protected void onCreate( Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.result);
+        fanKui = findViewById(R.id.fanKui);
+        fanKui.setOnClickListener(ResultOnClickListener);
         path=getIntent().getStringExtra("picpath");//通过值"picpath"得到照片路径
         type=getIntent().getIntExtra("type",0);
         ImageView imageview=findViewById(R.id.pic);
@@ -48,7 +54,20 @@ public class ResultActivity extends Activity {
         pb.setVisibility(View.VISIBLE);
         if(type==1) b_res_an();
         else b_res_p();
+
     }
+    View.OnClickListener ResultOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.fanKui:
+                    Intent intent1 = new Intent(ResultActivity.this, FeedbackActivity.class);
+                    startActivity(intent1);
+                    break;
+            }
+        }
+    };
+
     public void b_res_an()
     {
         final String[] res = new String[1];
@@ -105,6 +124,7 @@ public class ResultActivity extends Activity {
                                 res_tv.setText(getjson(res[0]));
                                 else res_tv.setText(res[0]);
                                 accuracy.setText("准确率:"+(int)(Accuracy*100)+"%");
+                                pb.setVisibility(View.GONE);
                             }
                         });
                     }
@@ -119,6 +139,7 @@ public class ResultActivity extends Activity {
 
         }
     }
+
     private String getjson(String string) {
         try {
             JSONObject jsonObject = new JSONObject(string);
@@ -143,4 +164,5 @@ public class ResultActivity extends Activity {
         return null;
 
     }
+
 }
