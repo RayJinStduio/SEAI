@@ -17,28 +17,30 @@ import java.io.File;
 /**
  * 裁剪图片
  */
-public class CropImage extends ActivityResultContract<CropImageResult, Uri> {
-
+public class CropImage extends ActivityResultContract<CropImageResult, Uri>
+{
     //裁剪后输出的图片文件Uri
     private Uri mUriOutput;
-
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, CropImageResult input) {
-
+    public Intent createIntent(@NonNull Context context, CropImageResult input)
+    {
         //把CropImageResult转换成裁剪图片的意图
         Intent intent = new Intent("com.android.camera.action.CROP");
         String mimeType = context.getContentResolver().getType(input.getUri());
         String imageName = System.currentTimeMillis() +"."+
                 MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.DISPLAY_NAME, imageName);
             values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
             values.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/SEAI");
             mUriOutput = context.getContentResolver()
                     .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        } else {
+        }
+        else
+        {
             mUriOutput = Uri.fromFile(new File(context.getExternalCacheDir().getAbsolutePath(), imageName));
         }
         context.grantUriPermission(context.getPackageName(), mUriOutput, Intent.FLAG_GRANT_READ_URI_PERMISSION);
@@ -52,9 +54,9 @@ public class CropImage extends ActivityResultContract<CropImageResult, Uri> {
         //返回格式
         intent.putExtra("outputFormat", "JPEG");
         intent.putExtra("return-data", false);
-
         //配置裁剪图片的宽高比例
-        if (input.getAspectX() != 0 && input.getAspectY() != 0) {
+        if (input.getAspectX() != 0 && input.getAspectY() != 0)
+        {
             intent.putExtra("aspectX", input.getAspectX());
             intent.putExtra("aspectY", input.getAspectY());
         }
@@ -62,7 +64,8 @@ public class CropImage extends ActivityResultContract<CropImageResult, Uri> {
     }
 
     @Override
-    public Uri parseResult(int resultCode, @Nullable Intent intent) {
+    public Uri parseResult(int resultCode, @Nullable Intent intent)
+    {
         if(resultCode==-1) return mUriOutput;
         else return null;
     }

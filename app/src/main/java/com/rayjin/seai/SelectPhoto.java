@@ -25,24 +25,15 @@ public class SelectPhoto extends PopupWindow
         album = view.findViewById(R.id.album);
         album.setOnClickListener(itemsOnClick);
         this.setOutsideTouchable(true);
-
-        this.view.setOnTouchListener((v, event) -> {
+        this.view.setOnTouchListener((v, event) ->
+        {
             int height = view.findViewById(R.id.menu).getTop();
-            //Log.e("info","h: "+height);
             int y = (int) event.getY();
-            //Log.e("info","y: "+y);
             if (event.getAction() == MotionEvent.ACTION_UP)
-            {
                 if (y < height)
-                {
-                    //ColorDrawable dw = new ColorDrawable(0x00ffffff);
-                    //SelectPhoto.this.setBackgroundDrawable(dw);
                     dismiss();
-                }
-            }
             return true;
         });
-
         this.setContentView(this.view);
         this.setHeight(RelativeLayout.LayoutParams.MATCH_PARENT);
         this.setWidth(RelativeLayout.LayoutParams.MATCH_PARENT);

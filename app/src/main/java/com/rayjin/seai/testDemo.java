@@ -3,7 +3,6 @@ package com.rayjin.seai;
 import android.content.ContentUris;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,7 +48,7 @@ public class testDemo extends AppCompatActivity
                     Discriminate d = new Discriminate();
                     try
                     {
-                        res[0] = d.DcAnimal(d.pathtobyte(mpath));
+                        res[0] = d.DcAnimal(d.PathToByte(mpath));
                     }
                     catch (IOException e)
                     {
@@ -83,7 +82,7 @@ public class testDemo extends AppCompatActivity
                     Discriminate d = new Discriminate();
                     try
                     {
-                        res[0] = d.DcPlant(d.pathtobyte(mpath));
+                        res[0] = d.DcPlant(d.PathToByte(mpath));
                     }
                     catch (IOException e)
                     {

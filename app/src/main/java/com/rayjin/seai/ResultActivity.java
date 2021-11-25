@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -79,7 +77,7 @@ public class ResultActivity extends Activity {
                     Discriminate d = new Discriminate();
                     try
                     {
-                        res[0] = d.DcAnimal(d.pathtobyte(path));
+                        res[0] = d.DcAnimal(d.PathToByte(path));
 
                         runOnUiThread(new Runnable() {
                             @Override
@@ -115,7 +113,7 @@ public class ResultActivity extends Activity {
                     Discriminate d = new Discriminate();
                     try
                     {
-                        res[0] = d.DcPlant(d.pathtobyte(path));
+                        res[0] = d.DcPlant(d.PathToByte(path));
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

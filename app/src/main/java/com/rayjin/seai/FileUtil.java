@@ -5,18 +5,22 @@ import java.io.*;
 /**
  * 文件读取工具类
  */
-public class FileUtil {
+public class FileUtil
+{
 
     /**
      * 读取文件内容，作为字符串返回
      */
-    public static String readFileAsString(String filePath) throws IOException {
+    public static String readFileAsString(String filePath) throws IOException
+    {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             throw new FileNotFoundException(filePath);
         } 
 
-        if (file.length() > 1024 * 1024 * 1024) {
+        if (file.length() > 1024 * 1024 * 1024)
+        {
             throw new IOException("File is too large");
         } 
 
@@ -27,7 +31,8 @@ public class FileUtil {
         byte[] buf = new byte[10240];
         // 用于保存实际读取的字节数  
         int hasRead;
-        while ( (hasRead = fis.read(buf)) > 0 ) {
+        while ( (hasRead = fis.read(buf)) > 0 )
+        {
             sb.append(new String(buf, 0, hasRead));
         }  
         fis.close();  
@@ -37,33 +42,43 @@ public class FileUtil {
     /**
      * 根据文件路径读取byte[] 数组
      */
-    public static byte[] readFileByBytes(String filePath) throws IOException {
+    public static byte[] readFileByBytes(String filePath) throws IOException
+    {
         File file = new File(filePath);
-        if (!file.exists()) {
+        if (!file.exists())
+        {
             throw new FileNotFoundException(filePath);
-        } else {
+        }
+        else
+        {
             ByteArrayOutputStream bos = new ByteArrayOutputStream((int) file.length());
             BufferedInputStream in = null;
-
-            try {
+            try
+            {
                 in = new BufferedInputStream(new FileInputStream(file));
                 short bufSize = 1024;
                 byte[] buffer = new byte[bufSize];
                 int len1;
-                while (-1 != (len1 = in.read(buffer, 0, bufSize))) {
+                while (-1 != (len1 = in.read(buffer, 0, bufSize)))
+                {
                     bos.write(buffer, 0, len1);
                 }
 
                 return bos.toByteArray();
-            } finally {
-                try {
-                    if (in != null) {
+            }
+            finally
+            {
+                try
+                {
+                    if (in != null)
+                    {
                         in.close();
                     }
-                } catch (IOException var14) {
+                }
+                catch (IOException var14)
+                {
                     var14.printStackTrace();
                 }
-
                 bos.close();
             }
         }

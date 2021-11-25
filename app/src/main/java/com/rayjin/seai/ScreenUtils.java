@@ -55,7 +55,6 @@ public class ScreenUtils
      */
     public static int getStatusHeight(Context context)
     {
-
         int statusHeight = -1;
         try
         {
@@ -89,7 +88,6 @@ public class ScreenUtils
         bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
         view.destroyDrawingCache();
         return bp;
-
     }
 
     /**
@@ -107,7 +105,6 @@ public class ScreenUtils
         Rect frame = new Rect();
         activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(frame);
         int statusBarHeight = frame.top;
-
         int width = getScreenWidth(activity);
         int height = getScreenHeight(activity);
         Bitmap bp = null;
@@ -115,7 +112,5 @@ public class ScreenUtils
                 - statusBarHeight);
         view.destroyDrawingCache();
         return bp;
-
     }
-
 }

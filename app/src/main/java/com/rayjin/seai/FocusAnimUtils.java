@@ -4,9 +4,6 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.view.View;
 
-/**
- * Created by Danxx on 2016/4/18.
- */
 public class FocusAnimUtils {
 
     public static void focusAnim(View view){

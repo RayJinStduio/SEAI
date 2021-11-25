@@ -1,24 +1,13 @@
 package com.rayjin.seai;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -52,16 +41,15 @@ public class LoginActivity extends AppCompatActivity
 
     private final View.OnClickListener LoginOnClickListener = v ->
     {
-
         if (v.getId()==R.id.login_bt)
         {
             String pw = login_pw.getText().toString();
             String user = login_user.getText().toString();
-            if(user == null || user.isEmpty())
+            if(user.isEmpty())
             {
                 ShowToast.showToast(LoginActivity.this, "请输入账号");
             }
-            else if(pw == null || pw.isEmpty())
+            else if(pw.isEmpty())
             {
                 ShowToast.showToast(LoginActivity.this, "请输入密码");
             }
@@ -93,15 +81,15 @@ public class LoginActivity extends AppCompatActivity
             String user=signup_user.getText().toString();
             String pw=signup_pw.getText().toString();
             String pw2=signup_pw2.getText().toString();
-            if(user == null || user.isEmpty())
+            if(user.isEmpty())
             {
                 ShowToast.showToast(LoginActivity.this, "请输入账号");
             }
-            else if(pw == null || pw.isEmpty())
+            else if(pw.isEmpty())
             {
                 ShowToast.showToast(LoginActivity.this, "请输入密码");
             }
-            else if(pw2 == null || pw2.isEmpty())
+            else if(pw2.isEmpty())
             {
                 ShowToast.showToast(LoginActivity.this, "请再输入一次密码");
             }

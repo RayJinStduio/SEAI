@@ -37,11 +37,11 @@ import cn.bmob.v3.listener.UploadFileListener;
 
 public class SettingActivity extends AppCompatActivity
 {
-
-    TextView set_logout;
-    RelativeLayout set_Avatar,cpw;
-    Group menu;
-    Boolean isLogin;
+    public TextView set_logout;
+    public RelativeLayout set_Avatar,cpw;
+    public Group menu;
+    public Boolean isLogin;
+    public int task_next=-1;
     public static final String action = "rayjin.broadcast.action";
 
     @Override
@@ -67,18 +67,28 @@ public class SettingActivity extends AppCompatActivity
         }
     }
 
-    private void requestwrite()
+    public void DoTask()
+    {
+        if(task_next==0)
+            showPopFormBottom();
+        else if(task_next==1)
+            launchCameraUri();
+    }
+
+    private void RequestWrite()
     {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        else DoTask();
     }
 
-    private void requestcarema()
+    private void RequestCamera()
     {
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        else DoTask();
     }
 
     @Override
@@ -88,13 +98,13 @@ public class SettingActivity extends AppCompatActivity
         {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
             {
-
+                DoTask();
             }
             else
-            { //拒绝权限申请
+            {
+                //拒绝权限申请
                 Toast.makeText(this,"权限被拒绝了",Toast.LENGTH_SHORT).show();
             }
-
         }
     }
 
@@ -119,12 +129,13 @@ public class SettingActivity extends AppCompatActivity
             }
             else if(v.getId()==R.id.protrait_rl)
             {
-                if (isLogin) {//menu.setVisibility(View.VISIBLE);
-                    if (ContextCompat.checkSelfPermission(SettingActivity.this,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)
-                        showPopFormBottom();
-                    else requestwrite();
-                } else {
+                if (isLogin)
+                {
+                    task_next=0;
+                    RequestWrite();
+                }
+                else
+                {
                     Toast toast = Toast.makeText(SettingActivity.this, "用户未登录", Toast.LENGTH_SHORT);
                     toast.show();
                 }
@@ -145,30 +156,27 @@ public class SettingActivity extends AppCompatActivity
         }
     };
 
-    public void showPopFormBottom() {
+    public void showPopFormBottom()
+    {
         SelectPhoto takePhotoPopWin = new SelectPhoto(this, onClickListener);
-        //showAtLocation(View parent, int gravity, int x, int y)
         takePhotoPopWin.showAtLocation(findViewById(R.id.set_main), Gravity.CENTER, 0, 0);
     }
 
     private final View.OnClickListener onClickListener = v ->
     {
-
         if (v.getId()==R.id.take)
         {
-            requestcarema();
-            if (ContextCompat.checkSelfPermission(SettingActivity.this,
-                    Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED)
-                launchCameraUri();
+            task_next=1;
+            RequestCamera();
         }
         else if(v.getId()==R.id.album)
         {
-                launchAlbum();
+            launchAlbum();
         }
     };
 
 
-    private void motiAvatar(String path)
+    private void ModifyAvatar(String path)
     {
         final User user = BmobUser.getCurrentUser(User.class);
         BmobFile bmobFile = new BmobFile(new File(path));
@@ -179,37 +187,31 @@ public class SettingActivity extends AppCompatActivity
             {
                 if(e==null)
                 {
-                    //bmobFile.getFileUrl()--返回的上传文件的完整地址
-                    //user.setEmail("1234567@qq.com");
                     user.seticons(bmobFile);
                     user.update(new UpdateListener()
                     {
                         @Override
                         public void done(BmobException e)
                         {
-                            //Toast toast;
-                            Toast toast;
                             if (e == null)
                             {
-                                toast = Toast.makeText(SettingActivity.this, "头像修改成功", Toast.LENGTH_SHORT);
+                                ShowToast.showToast(SettingActivity.this, "头像修改成功");
                                 Intent intent = new Intent("rayjin.broadcast.action");
                                 intent.putExtra("data", 2);
                                 sendBroadcast(intent);
                             }
                             else
                             {
-                                toast = Toast.makeText(SettingActivity.this, "头像修改失败：" + e.getMessage(), Toast.LENGTH_SHORT);
+                                ShowToast.showToast(SettingActivity.this, "头像修改失败：" + e.getMessage());
                                 //Log.e("error", e.getMessage());toast.show();
                             }
-                            toast.show();
                         }
                     });
                 }
                 else
                 {
-                    Toast toast = Toast.makeText(SettingActivity.this, "头像上传失败：" + e.getMessage(), Toast.LENGTH_SHORT);
+                    ShowToast.showToast(SettingActivity.this, "头像上传失败：" + e.getMessage());
                     //Log.e("error", e.getMessage());toast.show();
-                    toast.show();
                 }
             }
             @Override
@@ -225,30 +227,21 @@ public class SettingActivity extends AppCompatActivity
         new ActivityResultContracts.GetContent(), result ->
         {
             if(result!=null)
-            {
                 launchImageCrop(result);
-            }
             else
-            {
-                Toast toast = Toast.makeText(SettingActivity.this, "选择已取消", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+               ShowToast.showToast(SettingActivity.this, "选择已取消");
         }
     );
 
     //注册调用
     private final ActivityResultLauncher<Object> mLauncherCameraUri = registerForActivityResult
     (
-        new TakeCameraUri(), result -> {
+        new TakeCameraUri(), result ->
+        {
             if(result!=null)
-            {
                 launchImageCrop(result);
-            }
             else
-            {
-                Toast toast = Toast.makeText(SettingActivity.this, "拍照已取消", Toast.LENGTH_SHORT);
-                toast.show();
-            }
+                ShowToast.showToast(SettingActivity.this, "拍照已取消");
         }
     );
 
@@ -262,12 +255,11 @@ public class SettingActivity extends AppCompatActivity
                     String path = CUriToPath(result);
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
                         path=getPath(SettingActivity.this,result);
-                    motiAvatar(path);
+                    ModifyAvatar(path);
                 }
                 else
                 {
-                    Toast toast = Toast.makeText(SettingActivity.this, "裁剪已取消", Toast.LENGTH_SHORT);
-                    toast.show();
+                    ShowToast.showToast(SettingActivity.this, "裁剪已取消");
                 }
             });
 
