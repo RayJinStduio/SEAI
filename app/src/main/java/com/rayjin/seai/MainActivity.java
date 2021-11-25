@@ -1,7 +1,11 @@
 package com.rayjin.seai;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity
     Handler mHandler;
     View carema_1;
     Thread t1;
+    int task_next=-1;
 
     int mMenuWidth;
 
@@ -189,14 +194,12 @@ public class MainActivity extends AppCompatActivity
                     ShowToast.showToast(MainActivity.this,"功能正在开发中...");
                     break;
                 case R.id.view5:
-                    Intent intent5 = new Intent(MainActivity.this, CameraActivity2.class);
-                    intent5.putExtra("type", 1);
-                    startActivity(intent5);
+                    task_next=0;
+                    requestcarema();
                     break;
                 case R.id.view6:
-                    Intent intent6 = new Intent(MainActivity.this, CameraActivity2.class);
-                    intent6.putExtra("type", 0);
-                    startActivity(intent6);
+                    task_next=1;
+                    requestcarema();
                     break;
                 case R.id.BtnUpgrade:
                     cheakupdate();;
@@ -206,6 +209,48 @@ public class MainActivity extends AppCompatActivity
             }
         }
     };
+
+    public void requestsuccess()
+    {
+        if(task_next==0)
+        {
+            Intent intent5 = new Intent(MainActivity.this, CameraActivity2.class);
+            intent5.putExtra("type", 1);
+            startActivity(intent5);
+        }
+        else if(task_next==1)
+        {
+            Intent intent6 = new Intent(MainActivity.this, CameraActivity2.class);
+            intent6.putExtra("type", 0);
+            startActivity(intent6);
+        }
+    }
+
+    private void requestcarema()
+    {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        else requestsuccess();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==1)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                requestsuccess();
+            }
+            else
+            { //拒绝权限申请
+                Toast.makeText(this,"权限被拒绝了",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
+
     private void loginByAccount() {
         //此处替换为你的用户名密码
         BmobUser.loginByAccount("RayJin", "123456", new LogInListener<User>() {

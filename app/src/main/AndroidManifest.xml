@@ -27,7 +27,8 @@
         android:supportsRtl="true"
         android:requestLegacyExternalStorage = "true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.SEAI">
+        android:theme="@style/Theme.SEAI"
+        android:screenOrientation="portrait">
         <activity android:name=".MainActivity">
             android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
@@ -44,7 +45,8 @@
 
         <activity android:name=".CameraActivity"/>
 
-        <activity android:name=".CameraActivity2"/>
+        <activity android:name=".CameraActivity2"
+            android:hardwareAccelerated="true"/>
 
         <activity android:name=".ResultActivity"/>
 
