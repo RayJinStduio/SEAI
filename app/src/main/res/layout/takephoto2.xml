@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FF000000">
 
-    <com.rayjin.seai.Camera2SurfaceView
+    <com.rayjin.seai.Camera2TextureView
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,19 +31,31 @@
         android:id="@+id/takephoto"
         android:background="@drawable/shape_circle_button"
         android:onClick="capture"
-        android:text="点击拍照"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/preview"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/preview" />
 
     <ImageView
+        android:translationZ="2dp"
         android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"/>
+        android:src="@drawable/camera"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintBottom_toBottomOf="@id/takephoto"
+        app:layout_constraintEnd_toEndOf="@id/takephoto"
+        app:layout_constraintStart_toStartOf="@id/takephoto"
+        app:layout_constraintTop_toTopOf="@id/takephoto"/>
 
+    <ImageView
+        android:translationZ="2dp"
+        android:id="@+id/takephoto_album"
+        android:src="@drawable/album2"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="@id/takephoto"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/takephoto"
+        app:layout_constraintTop_toTopOf="@id/takephoto"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

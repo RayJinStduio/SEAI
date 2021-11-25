@@ -145,17 +145,21 @@ public class Camera2Proxy {
         mImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
     }
 
-    public void setPreviewSurface(SurfaceHolder holder) {
+    public void setPreviewSurface(SurfaceHolder holder,int width,int height)
+    {
+        //holder.setFixedSize(1920,1080);
         mPreviewSurface = holder.getSurface();
+
     }
 
-    public void setPreviewSurface(SurfaceTexture surfaceTexture) {
-        surfaceTexture.setDefaultBufferSize(mPreviewSize.getWidth(), mPreviewSize.getHeight());
+    public void setPreviewSurface(SurfaceTexture surfaceTexture,int width,int height) {
+        surfaceTexture.setDefaultBufferSize(height, width);
         mPreviewSurface = new Surface(surfaceTexture);
     }
 
     private void initPreviewRequest() {
         try {
+
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(mPreviewSurface); // 设置预览输出的 Surface
             mCameraDevice.createCaptureSession(Arrays.asList(mPreviewSurface, mImageReader.getSurface()),
@@ -498,9 +502,6 @@ public class Camera2Proxy {
         return x;
     }
 
-    /**
-     * Compares two {@code Size}s based on their areas.
-     */
     static class CompareSizesByArea implements Comparator<Size> {
 
         @Override
