@@ -35,17 +35,17 @@ public class ForgetActivity extends AppCompatActivity
             String old_pw = old_forget.getText().toString();
             String pw1 = pass1.getText().toString();
             String pw2 = pass2.getText().toString();
-            if(old_pw==null||old_pw.length()==0)
+            if(old_pw.length() == 0)
             {
                 Toast toast = Toast.makeText(ForgetActivity.this, "请输入原始密码", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            else if(pw1==null||pw1.length()==0)
+            else if(pw1.length() == 0)
             {
                 Toast toast = Toast.makeText(ForgetActivity.this, "请输入新的密码", Toast.LENGTH_SHORT);
                 toast.show();
             }
-            else if(pw2==null||pw2.length()==0)
+            else if(pw2.length() == 0)
             {
                 Toast toast = Toast.makeText(ForgetActivity.this, "请再次输入新密码", Toast.LENGTH_SHORT);
                 toast.show();

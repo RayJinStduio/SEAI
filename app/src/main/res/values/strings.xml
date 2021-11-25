@@ -1,4 +1,31 @@
 <resources>
     <string name="app_name">SEAI</string>
     <string name="welcome">Welcome !</string>
+    <string name="welcome2">Welcome!</string>
+    <string name="UnLogin">未登录</string>
+    <string name="menu">菜单</string>
+    <string name="ObserveMode">Observe模式</string>
+    <string name="ImgRec">图片识别</string>
+    <string name="Animal">动物</string>
+    <string name="Plant">植物</string>
+    <string name="LocalPhoto">本地图片</string>
+    <string name="TakeToGet">拍照获取</string>
+    <string name="signup">注 册</string>
+    <string name="InputUsername">请输入用户名</string>
+    <string name="InputPassword">请输入密码</string>
+    <string name="InputAgain">请再输入一次密码</string>
+    <string name="SignUp2">注 册</string>
+    <string name="SignIn">登 录</string>
+    <string name="SignIn2">登 录</string>
+    <string name="Picture">图片</string>
+    <string name="Accuracy">准确率:100%</string>
+    <string name="RecRes">识别结果</string>
+    <string name="Recognizing">识别中...</string>
+    <string name="FeedBack2">识别不准确？ 点我反馈</string>
+    <string name="Wiki">百度百科</string>
+    <string name="None">暂无</string>
+    <string name="FeedBack">反馈</string>
+    <string name="FeedBack3">反 馈</string>
+    <string name="DescribeProblem">请描述发现的问题</string>
+    <string name="Push">提 交</string>
 </resources>

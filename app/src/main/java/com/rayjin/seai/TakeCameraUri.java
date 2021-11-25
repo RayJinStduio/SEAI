@@ -17,26 +17,26 @@ import java.io.File;
 /**
  * 拍照返回存储的图片的uri
  */
-public class TakeCameraUri extends ActivityResultContract<Object, Uri> {
-
-    //拍照返回的uri
+public class TakeCameraUri extends ActivityResultContract<Object, Uri>
+{
     private Uri uri;
-
     @NonNull
     @Override
-    public Intent createIntent(@NonNull Context context, Object input) {
-
+    public Intent createIntent(@NonNull Context context, Object input)
+    {
         String mimeType = "image/jpeg";
         String fileName = System.currentTimeMillis() + ".jpg";
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
+        {
             ContentValues values = new ContentValues();
             values.put(MediaStore.MediaColumns.DISPLAY_NAME, fileName);
             values.put(MediaStore.MediaColumns.MIME_TYPE, mimeType);
             values.put(MediaStore.MediaColumns.RELATIVE_PATH, "Pictures/SEAI");
             uri = context.getContentResolver()
                     .insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-        } else {
+        }
+        else
+        {
             String authorities = "com.rayjin.seai.fileProvider";
             uri = FileProvider.getUriForFile(context, authorities,
                     new File(context.getExternalCacheDir().getAbsolutePath(), fileName));

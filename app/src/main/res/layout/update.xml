@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:padding="25dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/radiusview">
+    android:background="@drawable/radius_view">
 
 
     <TextView

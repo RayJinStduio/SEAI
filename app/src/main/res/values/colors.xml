@@ -6,6 +6,7 @@
     <color name="green">#FFBAF1E3</color>
     <color name="red">#FFFF0000</color>
     <color name="black">#FF000000</color>
+    <color name="always_black">#FF000000</color>
     <color name="gray">#FFEEEEEE</color>
     <color name="white">#FFFFFFFF</color>
     <color name="light_purple">#55C4D0FB</color>

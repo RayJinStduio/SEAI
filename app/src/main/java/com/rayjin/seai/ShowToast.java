@@ -3,12 +3,17 @@ package com.rayjin.seai;
 import android.content.Context;
 import android.widget.Toast;
 
-public class ShowToast {
+public class ShowToast
+{
     private static Toast toast = null;
-    public static void showToast(Context context, String str){
-        if (toast == null) {
+    public static void showToast(Context context, String str)
+    {
+        if (toast == null)
+        {
             toast = Toast.makeText(context, str, Toast.LENGTH_SHORT);
-        }else {
+        }
+        else
+        {
             toast.setText(str);
         }
         toast.show();

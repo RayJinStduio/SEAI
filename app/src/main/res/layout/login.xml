@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/login_bg">
 
 
@@ -43,7 +43,7 @@
                 android:layout_width="300dp"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="H,4:5"
-                android:background="@drawable/viewbg_plus"
+                android:background="@drawable/view_bg_plus"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +54,7 @@
                 android:id="@+id/textView9"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="注   册"
+                android:text="@string/signup"
                 android:textColor="@color/purple"
                 android:textSize="25sp"
                 android:layout_marginTop="25dp"
@@ -66,6 +66,7 @@
                 android:id="@+id/username_img_signup"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:contentDescription="@string/InputUsername"
                 app:srcCompat="@drawable/user"
                 app:layout_constraintStart_toStartOf="@id/signup_view"
                 app:layout_constraintEnd_toStartOf="@id/username_et_signup"
@@ -76,25 +77,23 @@
                 android:id="@+id/username_et_signup"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:background="@drawable/editview_bg"
+                android:background="@drawable/edit_view_bg"
                 android:inputType="textPersonName"
-                android:hint="请输入用户名"
+                android:hint="@string/InputUsername"
+                android:autofillHints="username"
                 android:textSize="14sp"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
                 app:layout_constraintStart_toEndOf="@id/username_img_signup"
                 app:layout_constraintEnd_toEndOf="@id/signup_view"
                 app:layout_constraintTop_toBottomOf="@id/textView9"
-                app:layout_constraintBottom_toTopOf="@id/password_et_signup" />
-
-
-
-
+                app:layout_constraintBottom_toTopOf="@id/password_et_signup"/>
 
             <ImageView
                 android:id="@+id/password_img_signup"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:contentDescription="@string/InputPassword"
                 app:srcCompat="@drawable/password"
                 app:layout_constraintStart_toStartOf="@id/signup_view"
                 app:layout_constraintEnd_toStartOf="@id/password_et_signup"
@@ -105,9 +104,10 @@
                 android:id="@+id/password_et_signup"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:background="@drawable/editview_bg"
+                android:background="@drawable/edit_view_bg"
                 android:inputType="textPassword"
-                android:hint="请输入密码"
+                android:autofillHints="password"
+                android:hint="@string/InputPassword"
                 android:textSize="14sp"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
@@ -121,6 +121,7 @@
                 android:id="@+id/password2_img_signup"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:contentDescription="@string/InputAgain"
                 app:srcCompat="@drawable/password"
                 app:layout_constraintStart_toStartOf="@id/signup_view"
                 app:layout_constraintEnd_toStartOf="@id/password2_et_signup"
@@ -131,9 +132,10 @@
                 android:id="@+id/password2_et_signup"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:background="@drawable/editview_bg"
+                android:background="@drawable/edit_view_bg"
                 android:inputType="textPassword"
-                android:hint="请再输入一次密码"
+                android:hint="@string/InputAgain"
+                android:autofillHints="password"
                 android:textSize="14sp"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
@@ -145,7 +147,7 @@
 
             <Button
                 android:id="@+id/signup_bt"
-                android:text="注   册"
+                android:text="@string/SignUp2"
                 android:textSize="16sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -157,20 +159,21 @@
                 app:layout_constraintBottom_toBottomOf="@id/signup_view"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/login_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
+
             <View
                 android:id="@+id/login_view"
                 android:layout_width="300dp"
                 android:layout_height="0dp"
                 app:layout_constraintDimensionRatio="H,4:5"
-                android:background="@drawable/viewbg_plus"
+                android:background="@drawable/view_bg_plus"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -181,7 +184,7 @@
                 android:id="@+id/textView8"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="登   录"
+                android:text="@string/SignIn"
                 android:textColor="@color/purple"
                 android:textSize="25sp"
                 android:layout_marginTop="25dp"
@@ -193,6 +196,7 @@
                 android:id="@+id/username_img"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:contentDescription="@string/InputUsername"
                 app:srcCompat="@drawable/user"
                 app:layout_constraintStart_toStartOf="@id/login_view"
                 app:layout_constraintEnd_toStartOf="@id/username_et"
@@ -203,9 +207,10 @@
                 android:id="@+id/username_et"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:background="@drawable/editview_bg"
+                android:background="@drawable/edit_view_bg"
                 android:inputType="textPersonName"
-                android:hint="请输入用户名"
+                android:hint="@string/InputUsername"
+                android:autofillHints="username"
                 android:textSize="14sp"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
@@ -214,14 +219,11 @@
                 app:layout_constraintTop_toBottomOf="@id/textView8"
                 app:layout_constraintBottom_toTopOf="@id/password_et" />
 
-
-
-
-
             <ImageView
                 android:id="@+id/password_img"
                 android:layout_width="25dp"
                 android:layout_height="25dp"
+                android:contentDescription="@string/InputPassword"
                 app:srcCompat="@drawable/password"
                 app:layout_constraintStart_toStartOf="@id/login_view"
                 app:layout_constraintEnd_toStartOf="@id/password_et"
@@ -232,9 +234,10 @@
                 android:id="@+id/password_et"
                 android:layout_width="200dp"
                 android:layout_height="40dp"
-                android:background="@drawable/editview_bg"
+                android:background="@drawable/edit_view_bg"
                 android:inputType="textPassword"
-                android:hint="请输入密码"
+                android:hint="@string/InputPassword"
+                android:autofillHints="password"
                 android:textSize="14sp"
                 android:paddingStart="18dp"
                 android:paddingEnd="18dp"
@@ -247,7 +250,7 @@
                 android:id="@+id/login_bt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="登   录"
+                android:text="@string/SignIn2"
                 android:textSize="16sp"
                 android:background="@drawable/button"
                 app:layout_constraintDimensionRatio="H,9:29"

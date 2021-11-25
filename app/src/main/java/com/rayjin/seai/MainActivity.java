@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity
     View carema_1;
     Thread t1;
     int task_next=-1;
-
+    boolean ischeaking=false;
     int mMenuWidth;
 
     @Override
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity
                     requestcarema();
                     break;
                 case R.id.BtnUpgrade:
-                    cheakupdate();;
+                    if(!ischeaking) cheakupdate();;
                     break;
                 default:
                     break;
@@ -380,6 +380,7 @@ public class MainActivity extends AppCompatActivity
 
     public void cheakupdate()
     {
+        ischeaking=true;
         BmobQuery<AppVersion> query = new BmobQuery<>();
         query.setLimit(1).setSkip(0).order("-createdAt")
                 .findObjects(new FindListener<AppVersion>() {
@@ -393,14 +394,15 @@ public class MainActivity extends AppCompatActivity
                                 String version_old= MainActivity.this.getPackageManager().
                                         getPackageInfo(MainActivity.this.getPackageName(), 0).versionName;
                                 if (object.get(0).getversion_i() > AppCode) {
-                                    //检测到有更新比对版本
+                                    //检测到有更新比对版本'
                                     updatedialog(version_old,object.get(0).getversion(),
                                             object.get(0).update_log,object.get(0).path);
                                 }
-                                else{
+                                else
+                                {
                                     ShowToast.showToast(MainActivity.this,"当前已为最新版本");
                                 }
-
+                                ischeaking=false;
                             }
                             catch (PackageManager.NameNotFoundException nameNotFoundException)
                             {

@@ -24,20 +24,24 @@ import cn.bmob.v3.listener.DownloadFileListener;
 /**
  * 作者 Ray
  * 时间 2021/11/8 8:06
- * 名称 CustomDialog.java 描述
+ * 名称 UpdateDialog.java
  */
-public class UpdateDialog extends Dialog {
+public class UpdateDialog extends Dialog
+{
 
     /* Constructor */
-    private UpdateDialog(Context context) {
+    private UpdateDialog(Context context)
+    {
         super(context);
     }
 
-    private UpdateDialog(Context context, int themeResId) {
+    private UpdateDialog(Context context, int themeResId)
+    {
         super(context, themeResId);
     }
 
-    private UpdateDialog(Context context, boolean cancelable, OnCancelListener cancelListener) {
+    private UpdateDialog(Context context, boolean cancelable, OnCancelListener cancelListener)
+    {
         super(context, cancelable, cancelListener);
     }
 
@@ -75,36 +79,32 @@ public class UpdateDialog extends Dialog {
         public Builder SetNewVersion(String NewVersion)
         {
             new_version.setText(NewVersion);
-            //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
         public Builder SetContext(Context cont)
         {
             con = cont;
-            //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
         public Builder SetFile(BmobFile NewFile)
         {
             file = NewFile;
-            //tvTitle.setVisibility(View.VISIBLE);
             return this;
         }
 
         /**
-         * 设置 Warning
+         * 设置 OldVersion
          */
         public Builder SetOldVersion(String OldVersion)
         {
-            //tvWarning.setText(waring);
             old_version.setText(OldVersion);
             return this;
         }
 
         /**
-         * 设置 Info
+         * 设置 content
          */
         public Builder SetContent(String message)
         {
@@ -139,13 +139,11 @@ public class UpdateDialog extends Dialog {
             File saveFile = new File(Environment.getExternalStorageDirectory(), file.getFilename());
             file.download(saveFile, new DownloadFileListener()
             {
-
                 @Override
                 public void onStart()
                 {
                     ShowToast.showToast(con, "开始下载");
                 }
-
                 @Override
                 public void done(String savePath, BmobException e)
                 {
