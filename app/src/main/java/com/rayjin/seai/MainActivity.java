@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -88,12 +89,7 @@ public class MainActivity extends AppCompatActivity
         carema_1 = findViewById(R.id.view4);
         carema_1.setOnClickListener(MainOnClickListener);
 
-//        StrictMode.setThreadPolicy(new
-//                StrictMode.ThreadPolicy.Builder().detectDiskReads().detectDiskWrites().detectNetwork().penaltyLog().build());
-//        StrictMode.setVmPolicy(
-//                new StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects().detectLeakedClosableObjects().penaltyLog().penaltyDeath().build());
-
-        Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
+        //Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
 
         if (BmobUser.isLogin())
         {
@@ -202,7 +198,9 @@ public class MainActivity extends AppCompatActivity
                     requestcarema();
                     break;
                 case R.id.BtnUpgrade:
-                    if(!ischeaking) cheakupdate();;
+                    task_next=2;
+                    //RequestInstallApk();
+                    requestsuccess();
                     break;
                 default:
                     break;
@@ -224,6 +222,11 @@ public class MainActivity extends AppCompatActivity
             intent6.putExtra("type", 0);
             startActivity(intent6);
         }
+        else if(task_next==2)
+            if(!ischeaking)
+                cheakupdate();
+            else
+                ShowToast.showToast(MainActivity.this,"正在检测更新");
     }
 
     private void requestcarema()
@@ -231,6 +234,14 @@ public class MainActivity extends AppCompatActivity
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
             ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},1);
+        else requestsuccess();
+    }
+
+    private void RequestInstallApk()
+    {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.REQUEST_INSTALL_PACKAGES) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.REQUEST_INSTALL_PACKAGES},1);
         else requestsuccess();
     }
 
@@ -394,15 +405,16 @@ public class MainActivity extends AppCompatActivity
                                 String version_old= MainActivity.this.getPackageManager().
                                         getPackageInfo(MainActivity.this.getPackageName(), 0).versionName;
                                 if (object.get(0).getversion_i() > AppCode) {
-                                    //检测到有更新比对版本'
+                                    //检测到有更新比对版本
                                     updatedialog(version_old,object.get(0).getversion(),
                                             object.get(0).update_log,object.get(0).path);
                                 }
                                 else
                                 {
                                     ShowToast.showToast(MainActivity.this,"当前已为最新版本");
+                                    ischeaking=false;
                                 }
-                                ischeaking=false;
+
                             }
                             catch (PackageManager.NameNotFoundException nameNotFoundException)
                             {
@@ -424,24 +436,10 @@ public class MainActivity extends AppCompatActivity
             builder.SetFile(file);
             Context c=MainActivity.this;
             builder.SetContext(c);
-            //                   builder.setTitle("提示");
-//                    builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                            //设置你的操作事项
-//                        }
-//                    });
-//
-//                    builder.setNegativeButton("取消",
-//                            new android.content.DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    dialog.dismiss();
-//                                }
-//                            });
-
             builder.create().show();
-
+            ischeaking=false;
     }
+
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(broadcastReceiver);

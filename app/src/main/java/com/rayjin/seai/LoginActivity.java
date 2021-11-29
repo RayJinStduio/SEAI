@@ -108,7 +108,7 @@ public class LoginActivity extends AppCompatActivity
                         if (e == null) {
                             ShowToast.showToast(LoginActivity.this, "注册成功");
                             Intent intent = new Intent("rayjin.broadcast.action");
-                            intent.putExtra("data", 3);
+                            intent.putExtra("data", 1);
                             sendBroadcast(intent);
                             finish();
                         } else {
