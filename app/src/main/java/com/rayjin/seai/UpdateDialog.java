@@ -1,8 +1,11 @@
 package com.rayjin.seai;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -13,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import java.io.File;
@@ -136,7 +141,7 @@ public class UpdateDialog extends Dialog
         private void downloadFile(BmobFile file)
         {
             //允许设置下载文件的存储路径，默认下载文件的目录为：context.getApplicationContext().getCacheDir()
-            File saveFile = new File(Environment.getExternalStorageDirectory(), file.getFilename());
+            File saveFile = new File(con.getExternalCacheDir(), file.getFilename());
             file.download(saveFile, new DownloadFileListener()
             {
                 @Override
@@ -149,7 +154,7 @@ public class UpdateDialog extends Dialog
                 {
                     if (e == null)
                     {
-                       ShowToast.showToast(con, "下载成功,保存路径:" + savePath);
+                       ShowToast.showToast(con, "下载成功");
                        installApk(savePath);
                     }
                     else
@@ -176,7 +181,7 @@ public class UpdateDialog extends Dialog
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
             {
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                Uri uri = FileProvider.getUriForFile(con, con.getPackageName() + ".fileprovider", apkFile);
+                Uri uri = FileProvider.getUriForFile(con, con.getPackageName() + ".fileProvider", apkFile);
                 intent.setDataAndType(uri, "application/vnd.android.package-archive");
             }
             else
@@ -185,5 +190,6 @@ public class UpdateDialog extends Dialog
             }
             con.startActivity(intent);
         }
+
     }
 }
