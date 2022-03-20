@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg">
@@ -116,6 +117,15 @@
                 app:layout_constraintTop_toBottomOf="@id/username_et_signup"
                 app:layout_constraintBottom_toTopOf="@id/password2_et_signup"/>
 
+            <ImageView
+                android:id="@+id/signin_vis"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="7dp"
+                app:srcCompat="@drawable/invis"
+                app:layout_constraintTop_toTopOf="@id/password_et_signup"
+                app:layout_constraintBottom_toBottomOf="@id/password_et_signup"
+                app:layout_constraintEnd_toEndOf="@id/password_et_signup" />
 
             <ImageView
                 android:id="@+id/password2_img_signup"
@@ -143,6 +153,16 @@
                 app:layout_constraintEnd_toEndOf="@id/signup_view"
                 app:layout_constraintTop_toBottomOf="@id/password_et_signup"
                 app:layout_constraintBottom_toTopOf="@id/signup_bt"/>
+
+            <ImageView
+                android:id="@+id/signin_vis2"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="7dp"
+                app:srcCompat="@drawable/invis"
+                app:layout_constraintTop_toTopOf="@id/password2_et_signup"
+                app:layout_constraintBottom_toBottomOf="@id/password2_et_signup"
+                app:layout_constraintEnd_toEndOf="@id/password2_et_signup" />
 
 
             <Button
@@ -245,6 +265,16 @@
                 app:layout_constraintEnd_toEndOf="@id/login_view"
                 app:layout_constraintTop_toBottomOf="@id/username_et"
                 app:layout_constraintBottom_toTopOf="@id/login_bt"/>
+
+            <ImageView
+                android:id="@+id/login_vis"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginEnd="7dp"
+                app:srcCompat="@drawable/invis"
+                app:layout_constraintTop_toTopOf="@id/password_et"
+                app:layout_constraintBottom_toBottomOf="@id/password_et"
+                app:layout_constraintEnd_toEndOf="@id/password_et" />
 
             <Button
                 android:id="@+id/login_bt"

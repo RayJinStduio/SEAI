@@ -23,7 +23,7 @@
 
             <ProgressBar
                 android:indeterminate="false"
-                android:indeterminateDrawable="@anim/progressbar_v22"
+                android:indeterminateDrawable="@drawable/progressbar"
                 android:layout_height="170dp"
                 android:layout_width="170dp"
                 android:visibility="gone"

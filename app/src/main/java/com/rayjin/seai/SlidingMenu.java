@@ -7,7 +7,7 @@ import android.view.MotionEvent;
 import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import com.rayjin.seai.ScreenUtils;
+import com.rayjin.seai.Utils.ScreenUtils;
 
 public class SlidingMenu extends HorizontalScrollView
 {

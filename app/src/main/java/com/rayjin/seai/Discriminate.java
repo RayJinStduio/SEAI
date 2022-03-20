@@ -1,5 +1,15 @@
 package com.rayjin.seai;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+
+import com.rayjin.seai.Utils.Base64Util;
+import com.rayjin.seai.Utils.FileUtil;
+import com.rayjin.seai.Utils.HttpUtil;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 
@@ -8,6 +18,14 @@ public class Discriminate
     public byte[] PathToByte(String path) throws IOException
     {
         return FileUtil.readFileByBytes(path);
+    }
+
+    public Bitmap PathtoBitmap(String path) throws FileNotFoundException
+    {
+        FileInputStream fis = new
+                FileInputStream(path);
+        Bitmap bitmap= BitmapFactory.decodeStream(fis);
+        return bitmap;
     }
 
     public String DcAnimal(byte [] imgData)
@@ -28,6 +46,30 @@ public class Discriminate
             e.printStackTrace();
         }
         return null;
+
+    }
+
+//    public String DcAnimal(Bitmap img, Context c)
+//    {
+//        TrackingMobile t=new TrackingMobile(c);
+//        String s=t.execute(img);
+//        return s;
+//
+//    }
+
+    public String DcAnimal(Context context,Bitmap img)
+    {
+        try
+        {
+            String res=RApplication.RClassifier.predictByModel(img);
+            return res;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+
     }
 
     public String DcPlant(byte [] imgData)

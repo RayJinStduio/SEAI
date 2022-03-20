@@ -1,7 +1,6 @@
 package com.rayjin.seai;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -14,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.hardware.camera2.CameraCaptureSession;
 import android.hardware.camera2.CameraDevice;
 import android.hardware.camera2.CameraManager;
@@ -35,6 +33,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.rayjin.seai.Utils.ImageUtils;
+import com.rayjin.seai.Utils.ToolUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -78,6 +79,18 @@ public class CameraActivity2 extends AppCompatActivity {
         takephoto_btn.setOnClickListener(TakephotoOnClickListener);
         mCameraProxy = mCameraView.getCameraProxy();mCameraProxy = mCameraView.getCameraProxy();
         //requestcarema();
+        if (type == 1)
+        {
+            try
+            {
+                RApplication.RClassifier.init(ToolUtils.assetFilePath(CameraActivity2.this, "test.ptl"),
+                        ToolUtils.assetFilePath(CameraActivity2.this, "imagenet_classes.txt"),1);
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
 
     }
 

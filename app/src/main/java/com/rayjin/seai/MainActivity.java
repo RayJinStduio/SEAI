@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity
         carema_1 = findViewById(R.id.view4);
         carema_1.setOnClickListener(MainOnClickListener);
 
-        //Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
+        Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
 
-        if (BmobUser.isLogin())
+        if (RApplication.Rflag&&BmobUser.isLogin())
         {
             isLogin=true;
             final String strURL;

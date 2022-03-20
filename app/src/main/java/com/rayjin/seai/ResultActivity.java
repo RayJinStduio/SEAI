@@ -97,8 +97,37 @@ public class ResultActivity extends Activity {
 
                 }
             };
-            t1.start();
+            //t1.start();
+            if(path!=null)
+            {
+                Thread t2 = new Thread()
+                {
+                    public void run()
+                    {
+                        Discriminate d = new Discriminate();
+                        try
+                        {
+                            Bitmap b = d.PathtoBitmap(path);
+                            res[0] = d.DcAnimal(ResultActivity.this,b);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if(getjson(res[0])!=null)
+                                        res_tv.setText(getjson(res[0]));
+                                    else res_tv.setText(res[0]);
+                                    accuracy.setText("准确率:"+(int)(Accuracy*100)+"%");
+                                    pb.setVisibility(View.GONE);
+                                }
+                            });
+                        }
+                        catch (FileNotFoundException e)
+                        {
 
+                        }
+                    }
+                };
+                t2.start();
+            }
         }
     }
     public void b_res_p()
@@ -160,7 +189,6 @@ public class ResultActivity extends Activity {
             e.printStackTrace();
         }
         return null;
-
     }
 
 }

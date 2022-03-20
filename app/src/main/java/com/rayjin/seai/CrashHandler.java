@@ -81,8 +81,9 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler
                 Log.e(TAG, "error : ", e);
             }
             //退出程序
-            //android.os.Process.killProcess(android.os.Process.myPid());
-            //System.exit(1);
+            RApplication.Rflag=false;
+            android.os.Process.killProcess(android.os.Process.myPid());
+            System.exit(1);
         }
     }
 
@@ -96,6 +97,7 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler
         if (ex == null) {
             return false;
         }
+        RApplication.Rflag=false;
         //使用Toast来显示异常信息
         new Thread() {
             @Override
