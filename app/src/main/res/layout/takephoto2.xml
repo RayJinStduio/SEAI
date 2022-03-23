@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#FF000000">
 
-    <com.rayjin.seai.Camera2TextureView
+    <com.rayjin.seai.View.Camera2TextureView
         android:id="@+id/preview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.rayjin.seai.OverCameraView2
+    <com.rayjin.seai.View.OverCameraView2
         android:id="@+id/over"
         android:layout_width="match_parent"
         android:layout_height="0dp"

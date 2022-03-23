@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.View;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,6 +11,9 @@ import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.rayjin.seai.Utils.FocusAnimUtils;
+import com.rayjin.seai.R;
 
 /**
  * @Description: 自定义堆叠卡片容器

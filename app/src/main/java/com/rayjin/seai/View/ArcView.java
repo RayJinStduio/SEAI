@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.View;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,38 +7,41 @@ import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 
-public class MainView extends View {
+import com.rayjin.seai.R;
+
+/**
+ * 弧形的view
+ */
+public class ArcView extends View {
     private int mWidth;
     private int mHeight;
 
-    private int Radius; //圆弧的高度
-    private int mBgColor;   //背景颜色
-    private int lgColor;    //变化的最终颜色
-    private Paint mPaint;  //画笔
-    private LinearGradient linearGradient;
-    private Rect rect=new Rect(0,0,0,0);//普通的矩形
-    private Path path=new Path();//用来绘制曲面
+    private int mArcHeight; //圆弧的高度
+    private final int mBgColor;   //背景颜色
+    private final int lgColor;    //变化的最终颜色
+    private final Paint mPaint;  //画笔
+    private final Rect rect=new Rect(0,0,0,0);//普通的矩形
+    private final Path path=new Path();//用来绘制曲面
 
-    public MainView(Context context) {
+    public ArcView(Context context) {
         this(context, null);
     }
 
-    public MainView(Context context, @Nullable AttributeSet attrs) {
+    public ArcView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public MainView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public ArcView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.ArcView);
-        mBgColor = typedArray.getColor(R.styleable.ArcView_bgColor,getResources().getColor(R.color.purple));
+        mBgColor=typedArray.getColor(R.styleable.ArcView_bgColor,getResources().getColor(R.color.blue));
         lgColor = typedArray.getColor(R.styleable.ArcView_lgColor, mBgColor);
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -49,8 +52,8 @@ public class MainView extends View {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 //        Log.d("----","onSizeChanged");
-        linearGradient = new LinearGradient(0,0,getMeasuredWidth(),0,
-                mBgColor,lgColor, Shader.TileMode.CLAMP
+        LinearGradient linearGradient = new LinearGradient(0, 0, getMeasuredWidth(), 0,
+                mBgColor, lgColor, Shader.TileMode.CLAMP
         );
         mPaint.setShader(linearGradient);
     }
@@ -62,25 +65,16 @@ public class MainView extends View {
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setColor(mBgColor);
 
-        //绘制路径
-        path.moveTo(Radius,0);
-        path.lineTo(mWidth - Radius, 0);
-        //在(400, 200, 600, 400)区域内绘制一个300度的圆弧
-        RectF rectF = new RectF(mWidth - 2 * Radius, 0, mWidth, Radius * 2);
-        path.arcTo(rectF, -90, 90);
-        path.lineTo(mWidth, mHeight - 2 * Radius);
-        rectF = new RectF(mWidth - 2 * Radius, mHeight - 3 * Radius, mWidth, mHeight - Radius);
-        path.arcTo(rectF, 0, 90);
-        path.lineTo(Radius, mHeight - Radius);
-        rectF = new RectF(0, mHeight -  Radius, 2 * Radius, mHeight + Radius);
-        path.arcTo(rectF, 270, -90);
-        path.lineTo(0, Radius);
-        rectF = new RectF(0, 0, 2 * Radius, 2 * Radius);
-        path.arcTo(rectF, 180, 90);
-        path.lineTo(Radius, 0);
-        path.setLastPoint(Radius, 0);
-        canvas.drawPath(path, mPaint);
+        //绘制矩形
+        rect.set(0, 0, mWidth, mHeight - mArcHeight);
+        canvas.drawRect(rect, mPaint);
 
+        //绘制路径
+        path.moveTo(0, mHeight-mArcHeight);
+        path.lineTo(0, mHeight);
+        path.quadTo(mWidth >> 1, mHeight - mArcHeight, mWidth, mHeight);
+        path.lineTo(mWidth, mHeight-mArcHeight);
+        canvas.drawPath(path, mPaint);
     }
 
     @Override
@@ -96,8 +90,8 @@ public class MainView extends View {
         }
         if (heightMode == MeasureSpec.EXACTLY) {
             mHeight = heightSize;
-            Radius = mWidth / 6;
+            mArcHeight = mHeight/3;
         }
-        setMeasuredDimension(mWidth, mHeight);;
+        setMeasuredDimension(mWidth, mHeight);
     }
 }

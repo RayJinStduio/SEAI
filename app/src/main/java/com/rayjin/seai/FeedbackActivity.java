@@ -1,13 +1,16 @@
 package com.rayjin.seai;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.rayjin.seai.BmobClass.User;
+import com.rayjin.seai.BmobClass.error;
+import com.rayjin.seai.BmobClass.feedback;
+import com.rayjin.seai.Utils.ShowToast;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -18,7 +21,6 @@ import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.datatype.BmobFile;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UpdateListener;
 import cn.bmob.v3.listener.UploadFileListener;
 
 public class FeedbackActivity extends AppCompatActivity
@@ -122,7 +124,7 @@ public class FeedbackActivity extends AppCompatActivity
             {
                 if(e==null)
                 {
-                    error e2 = new error();
+                    com.rayjin.seai.BmobClass.error e2 = new error();
                     e2.setError(error);
                     e2.setRight(content);
                     e2.setPic(bmobFile);

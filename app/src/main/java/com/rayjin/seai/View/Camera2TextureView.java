@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.View;
 
 import android.app.Activity;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.graphics.SurfaceTexture;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.TextureView;
+
+import com.rayjin.seai.Camera2Proxy;
 
 public class Camera2TextureView extends TextureView {
 

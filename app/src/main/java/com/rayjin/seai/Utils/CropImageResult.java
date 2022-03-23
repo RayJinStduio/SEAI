@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.Utils;
 
 import android.net.Uri;
 

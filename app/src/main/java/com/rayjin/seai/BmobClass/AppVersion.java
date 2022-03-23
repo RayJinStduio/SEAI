@@ -1,13 +1,13 @@
-package com.rayjin.seai;
+package com.rayjin.seai.BmobClass;
 
 import cn.bmob.v3.datatype.BmobFile;
 
 public class AppVersion extends  BmobFile
 {
     Integer version_i;
-    String version;
-    BmobFile path;
-    String update_log;
+    public String version;
+    public BmobFile path;
+    public String update_log;
     public Integer getversion_i() {
         return version_i;
     }

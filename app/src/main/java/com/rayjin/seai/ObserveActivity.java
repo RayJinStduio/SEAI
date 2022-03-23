@@ -1,4 +1,5 @@
 package com.rayjin.seai;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,10 +14,6 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.hardware.camera2.CameraCaptureSession;
-import android.hardware.camera2.CameraDevice;
-import android.hardware.camera2.CameraManager;
-import android.hardware.camera2.CaptureRequest;
 import android.media.Image;
 import android.media.ImageReader;
 import android.net.Uri;
@@ -24,75 +21,68 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.Surface;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.rayjin.seai.Utils.Discriminate;
 import com.rayjin.seai.Utils.ImageUtils;
 import com.rayjin.seai.Utils.ToolUtils;
-import com.rayjin.seai.View.Camera2TextureView;
+import com.rayjin.seai.View.ObserveView;
 import com.rayjin.seai.View.OverCameraView2;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
-public class CameraActivity2 extends AppCompatActivity {
-    Camera2TextureView mCameraView;
-    private Camera2Proxy mCameraProxy;
+public class ObserveActivity extends AppCompatActivity {
+    ObserveView mCameraView;
+    private ObserveProxy mCameraProxy;
     public int type;
-    CameraManager cameraManager;
-    CameraDevice.StateCallback cam_stateCallback;
-    CameraDevice opened_camera;
-    Surface texture_surface;
-    CameraCaptureSession.StateCallback cam_capture_session_stateCallback;
-    CameraCaptureSession.CaptureCallback still_capture_callback;
-    CameraCaptureSession cameraCaptureSession;
-    CaptureRequest.Builder requestBuilder;
-    CaptureRequest.Builder requestBuilder_image_reader;
-    ImageReader imageReader;
-    Surface imageReaderSurface;
-    Bitmap bitmap;
-    CaptureRequest request;
-    CaptureRequest takephoto_request;
-    Button takephoto_btn;
-    ImageView takephoto_imageView,takephoto_album;
-    OverCameraView2 overCameraView;
 
+    Bitmap bitmap;
+    OverCameraView2 overCameraView;
+    TextView lable_tv;
+    public static Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.takephoto2);
-        type= getIntent().getIntExtra("type",0);
-        takephoto_btn=findViewById(R.id.takephoto);
-        takephoto_imageView= findViewById(R.id.imageView2);
-        mCameraView=findViewById(R.id.preview);
-        overCameraView=findViewById(R.id.over);
+        setContentView(R.layout.observe);
+        mCameraView=findViewById(R.id.ob_preview);
+        overCameraView=findViewById(R.id.ob_over);
         overCameraView.setOnTouchListener(mOnTouchListener);
-        takephoto_album=findViewById(R.id.takephoto_album);
-        takephoto_album.setOnClickListener(TakephotoOnClickListener);
-        takephoto_btn.setOnClickListener(TakephotoOnClickListener);
+        lable_tv = findViewById(R.id.label_tv);
         mCameraProxy = mCameraView.getCameraProxy();
         //requestcarema();
-        if (type == 1)
+        try
         {
-            try
-            {
-                RApplication.RClassifier.init(ToolUtils.assetFilePath(CameraActivity2.this, "test.ptl"),
-                        ToolUtils.assetFilePath(CameraActivity2.this, "imagenet_classes.txt"),1);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
+            RApplication.RClassifier.init(ToolUtils.assetFilePath(ObserveActivity.this, "test.ptl"),
+                    ToolUtils.assetFilePath(ObserveActivity.this, "imagenet_classes.txt"),1);
         }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+        handler = new Handler(Looper.getMainLooper()){
+            @Override
+            public void handleMessage(Message msg) {
+                super.handleMessage(msg);
+                switch (msg.what) {      //判断标志位
+                    case 1:
+                        lable_tv.setText(msg.obj.toString());
+                        break;
+                }
+            }
+        };
+
+
+
 
     }
 
@@ -101,8 +91,7 @@ public class CameraActivity2 extends AppCompatActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.takephoto:
-                    mCameraProxy.setImageAvailableListener(mOnImageAvailableListener);
-                    mCameraProxy.captureStillPicture();
+
                     break;
                 case R.id.takephoto_album:
                     launchAlbum();
@@ -136,42 +125,79 @@ public class CameraActivity2 extends AppCompatActivity {
         }
     }
 
+    private final static int EXECUTION_FREQUENCY = 20;
+    private int PREVIEW_RETURN_IMAGE_COUNT=0;
+
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener =
             new ImageReader.OnImageAvailableListener()
             {
                 @Override
                 public void onImageAvailable(ImageReader reader)
                 {
+                    PREVIEW_RETURN_IMAGE_COUNT++;
+                    if(PREVIEW_RETURN_IMAGE_COUNT % EXECUTION_FREQUENCY !=0) return;
+                    PREVIEW_RETURN_IMAGE_COUNT = 0;
                     //new ImageSaveTask().execute(reader.acquireNextImage()); // 保存图片
                     Image image = reader.acquireLatestImage();
-                    ByteBuffer buffer = image.getPlanes()[0].getBuffer();
-                    int length = buffer.remaining();
-                    byte[] bytes = new byte[length];
-                    buffer.get(bytes);
                     image.close();
-                    // bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
+                    Thread t2 = new Thread()
+                    {
+                        public void run()
+                        {
+                            Discriminate d = new Discriminate();
+                            String res;
+                            Image image = reader.acquireLatestImage();
+                            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+                            int length = buffer.remaining();
+                            byte[] bytes = new byte[length];
+                            buffer.get(bytes);
+                            bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
+                            res = d.DcAnimal(ObserveActivity.this,bitmap);
+//                            runOnUiThread(new Runnable() {
+//                                @Override
+//                                public void run() {
+//                                    if(getjson(res)!=null)
+//                                        lable_tv.setText(getjson(res));
+//                                    else lable_tv.setText(res);
+//                                }
+//                            });
+                            image.close();
+                        }
+                    };
+                    //t2.start();
+
+
+
+
+                    //
                     //B2.2 显示图片
                     // takephoto_imageView.setVisibility(View.VISIBLE);
                     // takephoto_imageView.setImageBitmap(bitmap);
 
-                    File tempfile = new File(CameraActivity2.this.getExternalCacheDir().toString() + "/temp.png");//新建一个文件对象tempfile，并保存在某路径中
-                    try
-                    {
-                        FileOutputStream fos = new FileOutputStream(tempfile);
-                        fos.write(bytes);//将照片放入文件中
-                        fos.close();//关闭文件
-                        Intent intent = new Intent(CameraActivity2.this, ResultActivity.class);//新建信使对象
-                        intent.putExtra("picpath", tempfile.getAbsolutePath());//打包文件给信使
-                        intent.putExtra("type", type);
-                        startActivity(intent);//打开新的activity，即打开展示照片的布局界面
-                        CameraActivity2.this.finish();//关闭现有界面
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
+//                    File tempfile = new File(ObserveActivity.this.getExternalCacheDir().toString() + "/temp.png");//新建一个文件对象tempfile，并保存在某路径中
+//                    try
+//                    {
+//                        FileOutputStream fos = new FileOutputStream(tempfile);
+//                        fos.write(bytes);//将照片放入文件中
+//                        fos.close();//关闭文件
+//                        Intent intent = new Intent(ObserveActivity.this, ResultActivity.class);//新建信使对象
+//                        intent.putExtra("picpath", tempfile.getAbsolutePath());//打包文件给信使
+//                        intent.putExtra("type", type);
+//                        startActivity(intent);//打开新的activity，即打开展示照片的布局界面
+//                        ObserveActivity.this.finish();//关闭现有界面
+//                    }
+//                    catch (IOException e)
+//                    {
+//                        e.printStackTrace();
+//                    }
                 }
             };
+
+
+
+
+
+
     private class ImageSaveTask extends AsyncTask<Image, Void, Void>
     {
 
@@ -220,24 +246,24 @@ public class CameraActivity2 extends AppCompatActivity {
                         {
                             String path = CUriToPath(result);
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q)
-                                path=getPath(CameraActivity2.this,result);
-                            Intent intent = new Intent(CameraActivity2.this, ResultActivity.class);//新建信使对象
+                                path=getPath(ObserveActivity.this,result);
+                            Intent intent = new Intent(ObserveActivity.this, ResultActivity.class);//新建信使对象
                             intent.putExtra("picpath", path);//打包文件给信使
                             intent.putExtra("type", type);
                             startActivity(intent);//打开新的activity，即打开展示照片的布局界面
-                            CameraActivity2.this.finish();//关闭现有界面
+                            ObserveActivity.this.finish();//关闭现有界面
 
                         }
                         else
                         {
-                            Toast toast = Toast.makeText(CameraActivity2.this, "选择已取消", Toast.LENGTH_SHORT);
+                            Toast toast = Toast.makeText(ObserveActivity.this, "选择已取消", Toast.LENGTH_SHORT);
                             toast.show();
                         }
                     }
             );
     public String CUriToPath(Uri uri)
     {
-        return uri.getPath().replace("/files_root/cache",CameraActivity2.this.getExternalCacheDir().toString());
+        return uri.getPath().replace("/files_root/cache",ObserveActivity.this.getExternalCacheDir().toString());
     }
     /**
      * Get a file path from a Uri. This will get the the path for Storage Access

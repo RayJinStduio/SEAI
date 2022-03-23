@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.Utils;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;

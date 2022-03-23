@@ -1,9 +1,11 @@
-package com.rayjin.seai;
+package com.rayjin.seai.Utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.rayjin.seai.AuthService;
+import com.rayjin.seai.RApplication;
 import com.rayjin.seai.Utils.Base64Util;
 import com.rayjin.seai.Utils.FileUtil;
 import com.rayjin.seai.Utils.HttpUtil;
@@ -61,7 +63,7 @@ public class Discriminate
     {
         try
         {
-            String res=RApplication.RClassifier.predictByModel(img);
+            String res= RApplication.RClassifier.predictByModel(img);
             return res;
         }
         catch (Exception e)

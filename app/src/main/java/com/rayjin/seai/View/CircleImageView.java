@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.View;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

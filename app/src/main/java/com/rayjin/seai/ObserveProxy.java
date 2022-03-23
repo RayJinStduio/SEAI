@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
 import android.graphics.Rect;
 import android.graphics.SurfaceTexture;
@@ -18,27 +20,36 @@ import android.hardware.camera2.CaptureResult;
 import android.hardware.camera2.TotalCaptureResult;
 import android.hardware.camera2.params.MeteringRectangle;
 import android.hardware.camera2.params.StreamConfigurationMap;
+import android.media.Image;
 import android.media.ImageReader;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Message;
 import android.util.Log;
 import android.util.Size;
 import android.view.OrientationEventListener;
 import android.view.Surface;
-import android.view.SurfaceHolder;
 
 import androidx.annotation.NonNull;
 
+import com.rayjin.seai.Utils.Discriminate;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Camera2Proxy {
+public class ObserveProxy {
 
-    private static final String TAG = "Camera2Proxy";
+    private static final String TAG = "ObserveProxy";
 
     private Activity mActivity;
+
     private int mCameraId = CameraCharacteristics.LENS_FACING_FRONT; // 要打开的摄像头ID
     private Size mPreviewSize; // 预览大小
     private CameraManager mCameraManager; // 相机管理者
@@ -49,8 +60,6 @@ public class Camera2Proxy {
     private CaptureRequest mPreviewRequest;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
-    private Handler mBackgroundHandler2;
-    private HandlerThread mBackgroundThread2;
     private ImageReader mImageReader;
     private Surface mPreviewSurface;
     private OrientationEventListener mOrientationEventListener;
@@ -84,7 +93,7 @@ public class Camera2Proxy {
     };
 
     @TargetApi(Build.VERSION_CODES.M)
-    public Camera2Proxy(Activity activity) {
+    public ObserveProxy(Activity activity) {
         mActivity = activity;
         mCameraManager = (CameraManager) mActivity.getSystemService(Context.CAMERA_SERVICE);
         mOrientationEventListener = new OrientationEventListener(mActivity) {
@@ -93,6 +102,66 @@ public class Camera2Proxy {
                 mDeviceOrientation = orientation;
             }
         };
+    }
+
+    private final static int EXECUTION_FREQUENCY = 20;
+    private int PREVIEW_RETURN_IMAGE_COUNT=0;
+
+    private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
+        @Override
+        public void onImageAvailable(ImageReader reader) {
+            Image image = reader.acquireNextImage();
+            ByteBuffer buffer = image.getPlanes()[0].getBuffer();
+            int length = buffer.remaining();
+            byte[] bytes = new byte[length];
+            buffer.get(bytes);
+            image.close();
+            PREVIEW_RETURN_IMAGE_COUNT++;
+            if(PREVIEW_RETURN_IMAGE_COUNT % EXECUTION_FREQUENCY !=0) return;
+            PREVIEW_RETURN_IMAGE_COUNT = 0;
+
+            Thread t2 = new Thread()
+            {
+                public void run()
+                {
+                    Discriminate d = new Discriminate();
+                    String res;
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
+                    res = d.DcAnimal(mActivity,bitmap);
+                    res = getjson(res);
+                    Log.i("Ray",res);
+                    Message msg =Message.obtain();
+                    msg.obj = res;
+                    msg.what=1;   //标志消息的标志
+                    ObserveActivity.handler.sendMessage(msg);
+
+                }
+            };
+            t2.start();
+        }
+    };
+
+    private String getjson(String string) {
+        try {
+            JSONObject jsonObject = new JSONObject(string);
+            String result = jsonObject.getString("result");
+            JSONArray array = new JSONArray(result);
+            StringBuffer buffer = new StringBuffer();
+            for (int i = 0; i < 1; i++) {
+                JSONObject object = array.getJSONObject(i);
+                String name = object.getString("name");
+                double score = object.optDouble("score");
+                score*=100;
+                String sscore = String.format("%.2f",score);
+                //Log.e("1", "name：" + name + "  score：" + sscore + "%" );
+                buffer.append( name + " score: " + sscore + "%" + "\n");
+
+            }
+            return buffer.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @SuppressLint("MissingPermission")
@@ -113,6 +182,7 @@ public class Camera2Proxy {
             Log.d(TAG, "preview size: " + mPreviewSize.getWidth() + "*" + mPreviewSize.getHeight());
             // 打开摄像头
             mImageReader = ImageReader.newInstance(mPreviewSize.getWidth(), mPreviewSize.getHeight(), ImageFormat.JPEG, 2);
+            mImageReader.setOnImageAvailableListener(mOnImageAvailableListener, mBackgroundHandler);
 
             mCameraManager.openCamera(Integer.toString(mCameraId), mStateCallback, mBackgroundHandler);
         } catch (CameraAccessException e) {
@@ -138,33 +208,17 @@ public class Camera2Proxy {
         stopBackgroundThread(); // 对应 openCamera() 方法中的 startBackgroundThread()
     }
 
-    public void setImageAvailableListener(ImageReader.OnImageAvailableListener onImageAvailableListener) {
-        if (mImageReader == null) {
-            Log.w(TAG, "setImageAvailableListener: mImageReader is null");
-            return;
-        }
-        mImageReader.setOnImageAvailableListener(onImageAvailableListener, null);
-    }
-
-    public void setPreviewSurface(SurfaceHolder holder,int width,int height)
-    {
-        //holder.setFixedSize(1920,1080);
-        mPreviewSurface = holder.getSurface();
-
-    }
-
     public void setPreviewSurface(SurfaceTexture surfaceTexture,int width,int height) {
         surfaceTexture.setDefaultBufferSize(height, width);
         mPreviewSurface = new Surface(surfaceTexture);
     }
-
 
     private void initPreviewRequest() {
         try {
 
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(mPreviewSurface); // 设置预览输出的 Surface
-            //mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
+            mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
             mCameraDevice.createCaptureSession(Arrays.asList(mPreviewSurface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
 
@@ -214,42 +268,6 @@ public class Camera2Proxy {
         }
         try {
             mCaptureSession.stopRepeating();
-        } catch (CameraAccessException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void captureStillPicture() {
-        try {
-            CaptureRequest.Builder captureBuilder = mCameraDevice.createCaptureRequest(CameraDevice
-                    .TEMPLATE_STILL_CAPTURE);
-            captureBuilder.addTarget(mImageReader.getSurface());
-            captureBuilder.set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
-            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION, getJpegOrientation(mDeviceOrientation));
-            // 预览如果有放大，拍照的时候也应该保存相同的缩放
-            Rect zoomRect = mPreviewRequestBuilder.get(CaptureRequest.SCALER_CROP_REGION);
-            if (zoomRect != null) {
-                captureBuilder.set(CaptureRequest.SCALER_CROP_REGION, zoomRect);
-            }
-            mCaptureSession.stopRepeating();
-            mCaptureSession.abortCaptures();
-            final long time = System.currentTimeMillis();
-            mCaptureSession.capture(captureBuilder.build(), new CameraCaptureSession.CaptureCallback() {
-                @Override
-                public void onCaptureCompleted(@NonNull CameraCaptureSession session,
-                                               @NonNull CaptureRequest request,
-                                               @NonNull TotalCaptureResult result) {
-                    Log.w(TAG, "onCaptureCompleted, time: " + (System.currentTimeMillis() - time));
-                    try {
-                        mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER, CameraMetadata
-                                .CONTROL_AF_TRIGGER_CANCEL);
-                        mCaptureSession.capture(mPreviewRequestBuilder.build(), null, mBackgroundHandler);
-                    } catch (CameraAccessException e) {
-                        e.printStackTrace();
-                    }
-                    startPreview();
-                }
-            }, mBackgroundHandler);
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
@@ -482,10 +500,6 @@ public class Camera2Proxy {
             mBackgroundThread = new HandlerThread("CameraBackground");
             mBackgroundThread.start();
             mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
-
-//            mBackgroundThread2 = new HandlerThread("CameraBackground2");
-//            mBackgroundThread2.start();
-//            mBackgroundHandler2 = new Handler(mBackgroundThread2.getLooper());
         }
     }
 

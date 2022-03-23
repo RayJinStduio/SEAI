@@ -68,6 +68,10 @@
             android:launchMode="singleTop"/>
 
         <activity
+            android:name=".ObserveActivity"
+            android:launchMode="singleTop"/>
+
+        <activity
             android:name=".FeedbackActivity"
             android:launchMode="singleTop"/>
 
@@ -83,9 +87,9 @@
             android:name=".ForgetActivity"
             android:launchMode="singleTop"/>
 
-        <activity
-            android:name=".testDemo"
-            android:launchMode="singleTop"/>
+<!--        <activity-->
+<!--            android:name=".testDemo"-->
+<!--            android:launchMode="singleTop"/>-->
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rayjin.seai.BmobClass.User;
+import com.rayjin.seai.Utils.ShowToast;
+import com.rayjin.seai.View.StackCard;
+
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.LogInListener;

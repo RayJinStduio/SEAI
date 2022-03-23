@@ -1,4 +1,4 @@
-package com.rayjin.seai;
+package com.rayjin.seai.View;
 
 import android.content.Context;
 import android.util.AttributeSet;

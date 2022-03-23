@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.os.Looper;
 import android.util.Log;
 
+import com.rayjin.seai.Utils.ShowToast;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.PrintWriter;
@@ -21,11 +23,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import cn.bmob.v3.datatype.BmobFile;
-import cn.bmob.v3.exception.BmobException;
-import cn.bmob.v3.listener.SaveListener;
-import cn.bmob.v3.listener.UploadFileListener;
 
 public class CrashHandler implements Thread.UncaughtExceptionHandler
 {

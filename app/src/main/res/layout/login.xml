@@ -20,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <com.rayjin.seai.StackCard
+    <com.rayjin.seai.View.StackCard
         android:layout_marginTop="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -292,5 +292,5 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    </com.rayjin.seai.StackCard>
+    </com.rayjin.seai.View.StackCard>
 </androidx.constraintlayout.widget.ConstraintLayout>
