@@ -10,6 +10,9 @@
 *.ap_
 *.aab
 
+# pytorch modle
+*.ptl
+
 # Files for the ART/Dalvik VM
 *.dex
 
