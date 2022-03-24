@@ -10,6 +10,9 @@ import android.os.Message;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.rayjin.seai.BmobClass.logcat;
+import com.rayjin.seai.Utils.ShowToast;
+
 import java.io.File;
 
 import cn.bmob.v3.Bmob;

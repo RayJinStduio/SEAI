@@ -12,6 +12,8 @@ import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.rayjin.seai.Utils.CropImageResult;
+
 import java.io.File;
 
 /**

@@ -27,6 +27,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 
+import com.rayjin.seai.BmobClass.User;
+import com.rayjin.seai.Utils.CropImageResult;
+import com.rayjin.seai.Utils.ShowToast;
+
 import java.io.File;
 
 import cn.bmob.v3.BmobUser;

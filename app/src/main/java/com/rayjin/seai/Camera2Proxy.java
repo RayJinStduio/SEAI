@@ -39,7 +39,6 @@ public class Camera2Proxy {
     private static final String TAG = "Camera2Proxy";
 
     private Activity mActivity;
-
     private int mCameraId = CameraCharacteristics.LENS_FACING_FRONT; // 要打开的摄像头ID
     private Size mPreviewSize; // 预览大小
     private CameraManager mCameraManager; // 相机管理者
@@ -50,6 +49,8 @@ public class Camera2Proxy {
     private CaptureRequest mPreviewRequest;
     private Handler mBackgroundHandler;
     private HandlerThread mBackgroundThread;
+    private Handler mBackgroundHandler2;
+    private HandlerThread mBackgroundThread2;
     private ImageReader mImageReader;
     private Surface mPreviewSurface;
     private OrientationEventListener mOrientationEventListener;
@@ -157,11 +158,13 @@ public class Camera2Proxy {
         mPreviewSurface = new Surface(surfaceTexture);
     }
 
+
     private void initPreviewRequest() {
         try {
 
             mPreviewRequestBuilder = mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             mPreviewRequestBuilder.addTarget(mPreviewSurface); // 设置预览输出的 Surface
+            //mPreviewRequestBuilder.addTarget(mImageReader.getSurface());
             mCameraDevice.createCaptureSession(Arrays.asList(mPreviewSurface, mImageReader.getSurface()),
                     new CameraCaptureSession.StateCallback() {
 
@@ -479,6 +482,10 @@ public class Camera2Proxy {
             mBackgroundThread = new HandlerThread("CameraBackground");
             mBackgroundThread.start();
             mBackgroundHandler = new Handler(mBackgroundThread.getLooper());
+
+//            mBackgroundThread2 = new HandlerThread("CameraBackground2");
+//            mBackgroundThread2.start();
+//            mBackgroundHandler2 = new Handler(mBackgroundThread2.getLooper());
         }
     }
 

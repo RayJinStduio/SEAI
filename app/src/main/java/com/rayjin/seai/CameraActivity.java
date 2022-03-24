@@ -10,6 +10,8 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 
+import com.rayjin.seai.View.OverCameraView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

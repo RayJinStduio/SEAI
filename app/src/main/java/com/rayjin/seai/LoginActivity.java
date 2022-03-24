@@ -2,12 +2,19 @@ package com.rayjin.seai;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.rayjin.seai.BmobClass.User;
+import com.rayjin.seai.Utils.ShowToast;
+import com.rayjin.seai.View.StackCard;
 
 import cn.bmob.v3.BmobUser;
 import cn.bmob.v3.exception.BmobException;
@@ -20,6 +27,7 @@ public class LoginActivity extends AppCompatActivity
     private EditText login_user,login_pw,signup_user,signup_pw,signup_pw2;
     private TextView signup;
     private StackCard stack;
+    private ImageView login_vis,signin_vis,signin_vis2;
 
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -37,6 +45,12 @@ public class LoginActivity extends AppCompatActivity
         signup = findViewById(R.id.textView9);
         signup.setOnClickListener(LoginOnClickListener);
         stack = findViewById(R.id.stack);
+        login_vis=findViewById(R.id.login_vis);
+        login_vis.setOnClickListener(LoginOnClickListener);
+        signin_vis=findViewById(R.id.signin_vis);
+        signin_vis.setOnClickListener(LoginOnClickListener);
+        signin_vis2=findViewById(R.id.signin_vis2);
+        signin_vis2.setOnClickListener(LoginOnClickListener);
     }
 
     private final View.OnClickListener LoginOnClickListener = v ->
@@ -121,6 +135,45 @@ public class LoginActivity extends AppCompatActivity
         else if(v.getId() == R.id.textView9)
         {
             stack.setCurrentPage(2);
+        }
+        else if(v.getId() == R.id.login_vis)
+        {
+            if(login_pw.getTransformationMethod()== PasswordTransformationMethod.getInstance())
+            {
+                login_pw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                login_vis.setImageResource(R.drawable.vis);
+            }
+            else
+            {
+                login_pw.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                login_vis.setImageResource(R.drawable.invis);
+            }
+        }
+        else if(v.getId() == R.id.signin_vis)
+        {
+            if(signup_pw.getTransformationMethod()== PasswordTransformationMethod.getInstance())
+            {
+                signup_pw.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                signin_vis.setImageResource(R.drawable.vis);
+            }
+            else
+            {
+                signup_pw.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                signin_vis.setImageResource(R.drawable.invis);
+            }
+        }
+        else if(v.getId() == R.id.signin_vis2)
+        {
+            if(signup_pw2.getTransformationMethod()== PasswordTransformationMethod.getInstance())
+            {
+                signup_pw2.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                signin_vis2.setImageResource(R.drawable.vis);
+            }
+            else
+            {
+                signup_pw2.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                signin_vis2.setImageResource(R.drawable.invis);
+            }
         }
     };
 }

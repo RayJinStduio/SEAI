@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.rayjin.seai">
     
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -68,6 +68,10 @@
             android:launchMode="singleTop"/>
 
         <activity
+            android:name=".ObserveActivity"
+            android:launchMode="singleTop"/>
+
+        <activity
             android:name=".FeedbackActivity"
             android:launchMode="singleTop"/>
 
@@ -83,9 +87,9 @@
             android:name=".ForgetActivity"
             android:launchMode="singleTop"/>
 
-        <activity
-            android:name=".testDemo"
-            android:launchMode="singleTop"/>
+<!--        <activity-->
+<!--            android:name=".testDemo"-->
+<!--            android:launchMode="singleTop"/>-->
 
         <provider
             android:name="cn.bmob.v3.util.BmobContentProvider"

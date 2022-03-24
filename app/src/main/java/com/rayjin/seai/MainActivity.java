@@ -6,7 +6,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +22,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.rayjin.seai.BmobClass.AppVersion;
+import com.rayjin.seai.BmobClass.User;
+import com.rayjin.seai.Utils.ShowToast;
+import com.rayjin.seai.View.CircleImageView;
+import com.rayjin.seai.View.SlidingMenu;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -89,9 +94,9 @@ public class MainActivity extends AppCompatActivity
         carema_1 = findViewById(R.id.view4);
         carema_1.setOnClickListener(MainOnClickListener);
 
-        //Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
+        Bmob.initialize(MainActivity.this, "83363ad99170ea39b0e92cea3f713137");
 
-        if (BmobUser.isLogin())
+        if (RApplication.Rflag&&BmobUser.isLogin())
         {
             isLogin=true;
             final String strURL;
@@ -185,9 +190,10 @@ public class MainActivity extends AppCompatActivity
                     startActivity(intent3);
                     break;
                 case R.id.view4:
-                    //Intent intent4 = new Intent(MainActivity.this, testDemo.class);
-                    //startActivity(intent4);
-                    ShowToast.showToast(MainActivity.this,"功能正在开发中...");
+                    task_next=3;
+                    requestcarema();
+
+                    //ShowToast.showToast(MainActivity.this,"功能正在开发中...");
                     break;
                 case R.id.view5:
                     task_next=0;
@@ -223,10 +229,15 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent6);
         }
         else if(task_next==2)
-            if(!ischeaking)
-                cheakupdate();
-            else
-                ShowToast.showToast(MainActivity.this,"正在检测更新");
+        {
+            if (!ischeaking) cheakupdate();
+            else ShowToast.showToast(MainActivity.this, "正在检测更新");
+        }
+        else if(task_next==3)
+        {
+            Intent intent4 = new Intent(MainActivity.this, ObserveActivity.class);
+            startActivity(intent4);
+        }
     }
 
     private void requestcarema()
