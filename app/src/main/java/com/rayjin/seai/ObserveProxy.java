@@ -106,6 +106,7 @@ public class ObserveProxy {
 
     private final static int EXECUTION_FREQUENCY = 20;
     private int PREVIEW_RETURN_IMAGE_COUNT=0;
+    Thread t=null;
 
     private ImageReader.OnImageAvailableListener mOnImageAvailableListener = new ImageReader.OnImageAvailableListener() {
         @Override
@@ -116,28 +117,33 @@ public class ObserveProxy {
             byte[] bytes = new byte[length];
             buffer.get(bytes);
             image.close();
-            PREVIEW_RETURN_IMAGE_COUNT++;
-            if(PREVIEW_RETURN_IMAGE_COUNT % EXECUTION_FREQUENCY !=0) return;
-            PREVIEW_RETURN_IMAGE_COUNT = 0;
+            if(t!=null&&t.isAlive()) return;
+//            PREVIEW_RETURN_IMAGE_COUNT++;
+//            if(PREVIEW_RETURN_IMAGE_COUNT % EXECUTION_FREQUENCY !=0) return;
+//            PREVIEW_RETURN_IMAGE_COUNT = 0;
 
-            Thread t2 = new Thread()
-            {
-                public void run()
-                {
-                    Discriminate d = new Discriminate();
-                    String res;
-                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
-                    res = d.DcAnimal(mActivity,bitmap);
-                    res = getjson(res);
-                    Log.i("Ray",res);
-                    Message msg =Message.obtain();
-                    msg.obj = res;
-                    msg.what=1;   //标志消息的标志
-                    ObserveActivity.handler.sendMessage(msg);
-
-                }
-            };
-            t2.start();
+//            Thread t2 = new Thread()
+//            {
+//                public void run()
+//                {
+//                    Discriminate d = new Discriminate();
+//                    String res;
+//                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,length);
+//                    res = d.DcAnimal(mActivity,bitmap);
+//                    res = getjson(res);
+//                    Log.i("Ray",res);
+//                    Message msg =Message.obtain();
+//                    msg.obj = res;
+//                    msg.what=1;   //标志消息的标志
+//                    ObserveActivity.handler.sendMessage(msg);
+//
+//                }
+//            };
+//            t2.start();
+            ObverseThread ot=new ObverseThread();
+            ot.setTar(mActivity,bytes);
+            t=new Thread(ot);
+            t.start();
         }
     };
 

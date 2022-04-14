@@ -1,6 +1,7 @@
 package com.rayjin.seai;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -35,6 +36,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.rayjin.seai.Utils.ImageUtils;
+import com.rayjin.seai.Utils.ShowToast;
 import com.rayjin.seai.Utils.ToolUtils;
 import com.rayjin.seai.View.Camera2TextureView;
 import com.rayjin.seai.View.OverCameraView2;
@@ -65,6 +67,7 @@ public class CameraActivity2 extends AppCompatActivity {
     Button takephoto_btn;
     ImageView takephoto_imageView,takephoto_album;
     OverCameraView2 overCameraView;
+    int task_next=-1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,10 +108,44 @@ public class CameraActivity2 extends AppCompatActivity {
                     mCameraProxy.captureStillPicture();
                     break;
                 case R.id.takephoto_album:
-                    launchAlbum();
+                    task_next = 0;
+                    RequestWrite();
             }
         }
     };
+
+    public void requestsuccess()
+    {
+        if(task_next==0)
+        {
+            launchAlbum();
+        }
+    }
+
+    private void RequestWrite()
+    {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},1);
+        else requestsuccess();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode==1)
+        {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                requestsuccess();
+            }
+            else
+            { //拒绝权限申请
+                Toast.makeText(this,"权限被拒绝了",Toast.LENGTH_SHORT).show();
+            }
+
+        }
+    }
 
     final View.OnTouchListener mOnTouchListener = new View.OnTouchListener() {
         @Override

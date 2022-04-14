@@ -69,6 +69,7 @@
 
         <activity
             android:name=".ObserveActivity"
+            android:hardwareAccelerated="true"
             android:launchMode="singleTop"/>
 
         <activity
